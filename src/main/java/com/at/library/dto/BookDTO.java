@@ -13,7 +13,7 @@ public class BookDTO implements Serializable {
 	private String title;
 
 	private String author;
-
+	
 	public Integer getId() {
 		return id;
 	}
