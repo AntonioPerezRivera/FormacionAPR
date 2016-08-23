@@ -2,7 +2,7 @@ package com.at.library.service.employee;
 
 import java.util.List;
 
-import com.at.library.dto.BookDTO;
+import com.at.library.dto.EmployeeDTO;
 import com.at.library.model.Employee;
 
 public interface EmployeeService {
@@ -10,7 +10,7 @@ public interface EmployeeService {
 	/**
 	 * Realiza la busqueda de todos los empleados existentes
 	 * 
-	 * @return listado de libros
+	 * @return listado de empleados
 	 */
 	List<EmployeeDTO> findAll();
 
@@ -23,7 +23,7 @@ public interface EmployeeService {
 	EmployeeDTO transform(Employee employee);
 
 	/**
-	 * Transforma un libroDTO en un libro
+	 * Transforma un empleadoDTO en un empleado
 	 * 
 	 * @param book
 	 * @return

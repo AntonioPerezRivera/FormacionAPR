@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.at.library.dto.BookDTO;
-import com.at.library.service.book.BookService;
+import com.at.library.dto.EmployeeDTO;
+import com.at.library.service.employee.EmployeeService;
 
 @RestController
 public class EmployeeController {
 
 	@Autowired
-	private BookService bookservice;
+	private EmployeeService employeeService;
 
-	@RequestMapping(value = "/book", method = { RequestMethod.GET })
-	public List<BookDTO> getAll() {
-		return bookservice.findAll();
+	@RequestMapping(value = "/employee", method = { RequestMethod.GET })
+	public List<EmployeeDTO> getAll() {
+		return employeeService.findAll();
 	}
 
 }
