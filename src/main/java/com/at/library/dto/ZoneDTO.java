@@ -11,8 +11,6 @@ public class ZoneDTO implements Serializable {
 
 	private String name;
 
-	RoomDTO room;
-	
 	List<BookDTO> books;
 	
 	public Integer getId() {
@@ -29,14 +27,6 @@ public class ZoneDTO implements Serializable {
 	
 	public void setName(String name){
 		this.name = name;
-	}
-	
-	public RoomDTO getRoom(){
-		return room;
-	}
-	
-	public void setRoom(RoomDTO room){
-		this.room = room;
 	}
 	
 	public List<BookDTO> getBooks(){
