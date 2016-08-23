@@ -1,6 +1,7 @@
 package com.at.library.dto;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class BookDTO implements Serializable {
 
@@ -13,6 +14,8 @@ public class BookDTO implements Serializable {
 	private String title;
 
 	private String author;
+	
+	private List<RentDTO> rents;
 	
 	public Integer getId() {
 		return id;
@@ -46,4 +49,12 @@ public class BookDTO implements Serializable {
 		this.author = author;
 	}
 
+	public List<RentDTO> getRents(){
+		return rents;
+	}
+	
+	public void setRents(List<RentDTO> rents){
+		this.rents = rents;
+	}
+	
 }
