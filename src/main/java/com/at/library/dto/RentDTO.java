@@ -3,18 +3,7 @@ package com.at.library.dto;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-
 import com.at.library.enums.RentStatusEnum;
-import com.at.library.model.Book;
-import com.at.library.model.Employee;
-import com.at.library.model.User;
 
 public class RentDTO implements Serializable {
 
@@ -65,7 +54,7 @@ public class RentDTO implements Serializable {
 		this.employee = employee;
 	}
 	
-	public User getUser(){
+	public UserDTO getUser(){
 		return user;
 	}
 	
