@@ -17,7 +17,7 @@ public interface EmployeeService {
 	/**
 	 * Transfrma un empleado en un empleadoDTO
 	 * 
-	 * @param book
+	 * @param employee
 	 * @return
 	 */
 	EmployeeDTO transform(Employee employee);
@@ -25,7 +25,7 @@ public interface EmployeeService {
 	/**
 	 * Transforma un empleadoDTO en un empleado
 	 * 
-	 * @param book
+	 * @param employee
 	 * @return
 	 */
 	Employee transform(EmployeeDTO employee);
