@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.at.library.model.Book;
 
 @Repository
-public interface RentDao extends CrudRepository<Book, Integer> {
+public interface RentDao extends CrudRepository<Rent, Integer> {
 
 }
