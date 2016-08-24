@@ -30,4 +30,12 @@ public interface UserService {
 	 */
 	User transform(UserDTO user);
 
+	UserDTO create(UserDTO user);
+
+	UserDTO getById(Integer id);
+
+	void update(UserDTO user);
+
+	void delete(Integer id);
+
 }
