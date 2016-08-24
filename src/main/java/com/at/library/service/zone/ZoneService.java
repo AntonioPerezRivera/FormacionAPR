@@ -30,5 +30,13 @@ public interface ZoneService {
 	 */
 	Zone transform(ZoneDTO zone);
 
+	ZoneDTO create(ZoneDTO zone);
+
+	ZoneDTO getById(Integer id);
+
+	void update(ZoneDTO zone);
+
+	void delete(Integer id);
+
 }
 
