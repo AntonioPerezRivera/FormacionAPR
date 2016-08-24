@@ -41,13 +41,11 @@ public class BookController {
 		return bookService.getById(id);
 	}
 	
-	@RequestMapping(method={RequestMethod.GET})
-	public List<BookDTO> get(@RequestParam("name") String name, @RequestParam("isbn") String isbn, @RequestParam("author") String author){
+	@RequestMapping(value="/buscar",method={RequestMethod.GET})
+	public List<BookDTO> get(@RequestParam(value="name",required=false) String name, @RequestParam(value="isbn",required=false) String isbn, @RequestParam(value="author",required=false) String author){
 		log.debug(String.format("Recuperando libro con nombre: %s, isbn: %s y autor: %s",name,isbn,author));
 		return bookService.getByParams(name,isbn,author);
 	}
-	
-	
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
 	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO book){

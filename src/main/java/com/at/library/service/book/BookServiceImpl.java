@@ -84,7 +84,7 @@ public class BookServiceImpl implements BookService {
 		List<BookDTO> b;
 		// No se pasa ningun parametro
 		if(name == null && isbn == null && author == null){
-			return this.findAll();
+			return null;
 		}
 		// Solo se pasa el autor
 		else if(name == null && isbn == null){
