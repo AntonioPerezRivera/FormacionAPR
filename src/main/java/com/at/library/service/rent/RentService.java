@@ -30,4 +30,12 @@ public interface RentService {
 	 */
 	Rent transform(RentDTO Rent);
 
+	RentDTO create(RentDTO rent);
+
+	RentDTO getById(Integer id);
+
+	void update(RentDTO rent);
+
+	void delete(Integer id);
+
 }

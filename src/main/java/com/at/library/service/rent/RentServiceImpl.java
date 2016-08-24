@@ -44,4 +44,27 @@ public class RentServiceImpl implements RentService {
 		return dozer.map(rent, Rent.class);
 	}
 
+	@Override
+	public RentDTO create(RentDTO rent) {
+		Rent r = transform(rent);
+		return transform(rentDao.save(r));
+	}
+
+	@Override
+	public RentDTO getById(Integer id) {
+		Rent r = rentDao.findOne(id);
+		return transform(r);
+	}
+
+	@Override
+	public void update(RentDTO rent) {
+		Rent r = transform(rent);
+		transform(rentDao.save(r));
+	}
+
+	@Override
+	public void delete(Integer id) {
+		rentDao.delete(id);
+	}
+
 }
