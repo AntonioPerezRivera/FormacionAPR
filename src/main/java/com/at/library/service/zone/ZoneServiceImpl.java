@@ -35,13 +35,37 @@ public class ZoneServiceImpl implements ZoneService {
 	}
 
 	@Override
-	public ZoneDTO transform(Zone user) {
-		return dozer.map(user, ZoneDTO.class);
+	public ZoneDTO transform(Zone zone) {
+		return dozer.map(zone, ZoneDTO.class);
 	}
 
 	@Override
 	public Zone transform(ZoneDTO rent) {
 		return dozer.map(rent, Zone.class);
+	}
+	
+
+	@Override
+	public ZoneDTO create(ZoneDTO zone) {
+		Zone z = transform(zone);
+		return transform(zoneDao.save(z));
+	}
+
+	@Override
+	public ZoneDTO getById(Integer id) {
+		Zone z = zoneDao.findOne(id);
+		return transform(z);
+	}
+
+	@Override
+	public void update(ZoneDTO zone) {
+		Zone z = transform(zone);
+		transform(zoneDao.save(z));
+	}
+
+	@Override
+	public void delete(Integer id) {
+		zoneDao.delete(id);
 	}
 
 }
