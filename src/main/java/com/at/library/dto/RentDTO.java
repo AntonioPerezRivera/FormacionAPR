@@ -70,5 +70,10 @@ public class RentDTO implements Serializable {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "RentDTO [id=" + id + ", comments=" + comments + ", books=" + books + ", employee=" + employee
+				+ ", user=" + user + ", status=" + status + "]";
+	}
 
 }

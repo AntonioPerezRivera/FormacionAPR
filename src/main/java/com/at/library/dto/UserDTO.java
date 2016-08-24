@@ -88,5 +88,11 @@ public class UserDTO implements Serializable {
 	public void setRents(List<RentDTO> rents){
 		this.rents = rents;
 	}
+
+	@Override
+	public String toString() {
+		return "UserDTO [id=" + id + ", dni=" + dni + ", name=" + name + ", surname1=" + surname1 + ", surname2="
+				+ surname2 + ", address=" + address + ", userStatus=" + userStatus + ", rents=" + rents + "]";
+	}
 	
 }

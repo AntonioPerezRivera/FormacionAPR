@@ -66,5 +66,12 @@ public class EmployeeDTO implements Serializable {
 		this.address = address;
 	}
 
+	@Override
+	public String toString() {
+		return "EmployeeDTO [id=" + id + ", dni=" + dni + ", name=" + name + ", surname1=" + surname1 + ", surname2="
+				+ surname2 + ", address=" + address + "]";
+	}
+
+	
 }
 

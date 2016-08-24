@@ -56,5 +56,11 @@ public class BookDTO implements Serializable {
 	public void setRents(List<RentDTO> rents){
 		this.rents = rents;
 	}
+
+	@Override
+	public String toString() {
+		return "BookDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + ", rents=" + rents
+				+ "]";
+	}
 	
 }

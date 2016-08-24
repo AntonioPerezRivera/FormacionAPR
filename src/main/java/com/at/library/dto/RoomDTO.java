@@ -47,4 +47,9 @@ public class RoomDTO implements Serializable {
 		this.zones = zones;
 	}
 
+	@Override
+	public String toString() {
+		return "RoomDTO [id=" + id + ", name=" + name + ", address=" + address + ", zones=" + zones + "]";
+	}
+
 }

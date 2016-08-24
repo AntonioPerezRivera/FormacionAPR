@@ -37,4 +37,9 @@ public class ZoneDTO implements Serializable {
 		this.books = books;
 	}
 
+	@Override
+	public String toString() {
+		return "ZoneDTO [id=" + id + ", name=" + name + ", books=" + books + "]";
+	}
+
 }
