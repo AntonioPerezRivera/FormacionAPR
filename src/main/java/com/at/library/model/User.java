@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -41,7 +42,7 @@ public class User implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date membershipDate;
 
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	List<Rent> rents;
 	
 	public Integer getId() {

@@ -38,7 +38,7 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 
-	@OneToMany(cascade=CascadeType.REMOVE,fetch=FetchType.LAZY)
+	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
 	private List<Rent> rents;
 	
 	public Integer getId() {
