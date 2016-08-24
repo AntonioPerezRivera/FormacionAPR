@@ -30,4 +30,12 @@ public interface EmployeeService {
 	 */
 	Employee transform(EmployeeDTO employee);
 
+	EmployeeDTO create(EmployeeDTO employee);
+
+	EmployeeDTO getById(Integer id);
+
+	void update(EmployeeDTO employee);
+
+	void delete(Integer id);
+
 }

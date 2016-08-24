@@ -44,4 +44,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return dozer.map(employee, Employee.class);
 	}
 
+	@Override
+	public EmployeeDTO create(EmployeeDTO employee) {
+		Employee e = transform(employee);
+		return transform(employeeDao.save(e));
+	}
+
+	@Override
+	public EmployeeDTO getById(Integer id) {
+		Employee e = employeeDao.findOne(id);
+		return transform(e);
+	}
+
+	@Override
+	public void update(EmployeeDTO employee) {
+		Employee e = transform(employee);
+		employeeDao.save(e);
+	}
+
+	@Override
+	public void delete(Integer id) {
+		employeeDao.delete(id);
+	}
+
 }
