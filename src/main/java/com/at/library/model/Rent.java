@@ -10,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -29,6 +30,7 @@ public class Rent implements Serializable {
 	private String comments;
 
 	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="book_id")
 	private List<Book> books;
 	
 	@ManyToOne(fetch=FetchType.LAZY)

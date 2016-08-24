@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
@@ -39,6 +40,14 @@ public class BookController {
 		log.debug(String.format("Recuperando libro con id: %s",id));
 		return bookService.getById(id);
 	}
+	
+	@RequestMapping(method={RequestMethod.GET})
+	public List<BookDTO> get(@RequestParam("name") String name, @RequestParam("isbn") String isbn, @RequestParam("author") String author){
+		log.debug(String.format("Recuperando libro con nombre: %s, isbn: %s y autor: %s",name,isbn,author));
+		return bookService.getByParams(name,isbn,author);
+	}
+	
+	
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
 	public void update(@PathVariable("id") Integer id, @RequestBody BookDTO book){
