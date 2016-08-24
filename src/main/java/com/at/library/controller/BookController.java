@@ -46,7 +46,7 @@ public class BookController {
 		bookService.update(book);
 	}
 	
-	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
+	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a modificar el libro con id %s", id));
 		bookService.delete(id);

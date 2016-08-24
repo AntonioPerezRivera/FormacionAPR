@@ -46,7 +46,7 @@ public class ZoneController {
 		zoneService.update(zone);
 	}
 	
-	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
+	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a modificar la zona con id %s", id));
 		zoneService.delete(id);

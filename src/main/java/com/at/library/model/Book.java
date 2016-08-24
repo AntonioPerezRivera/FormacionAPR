@@ -11,7 +11,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,7 +38,7 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 
-	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY, mappedBy="books")
 	private List<Rent> rents;
 	
 	public Integer getId() {

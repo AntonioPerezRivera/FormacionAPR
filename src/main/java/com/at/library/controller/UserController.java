@@ -46,7 +46,7 @@ public class UserController {
 		userService.update(user);
 	}
 	
-	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
+	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a modificar el usuario con id %s", id));
 		userService.delete(id);

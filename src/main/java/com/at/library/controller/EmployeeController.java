@@ -46,7 +46,7 @@ public class EmployeeController {
 		employeeService.update(employee);
 	}
 	
-	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
+	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a modificar el empleado con id %s", id));
 		employeeService.delete(id);
