@@ -44,4 +44,27 @@ public class RoomServiceImpl implements RoomService {
 		return dozer.map(rent, Room.class);
 	}
 
+	@Override
+	public RoomDTO create(RoomDTO room) {
+		Room r = transform(room);
+		return transform(roomDao.save(r));
+	}
+
+	@Override
+	public RoomDTO getById(Integer id) {
+		Room r = roomDao.findOne(id);
+		return transform(r);
+	}
+
+	@Override
+	public void update(RoomDTO room) {
+		Room r = transform(room);
+		transform(roomDao.save(r));
+	}
+
+	@Override
+	public void delete(Integer id) {
+		roomDao.delete(id);
+	}
+
 }

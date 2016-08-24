@@ -30,4 +30,12 @@ public interface RoomService {
 	 */
 	Room transform(RoomDTO room);
 
+	RoomDTO create(RoomDTO room);
+
+	RoomDTO getById(Integer id);
+
+	void update(RoomDTO room);
+
+	void delete(Integer id);
+
 }
