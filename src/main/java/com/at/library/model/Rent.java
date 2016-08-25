@@ -2,37 +2,26 @@ package com.at.library.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.at.library.enums.RentStatusEnum;
+import com.at.library.pk.RentPK;
 
 @Entity
 public class Rent implements Serializable {
 
 	private static final long serialVersionUID = -3355087313344614141L;
 
-	@Id
-	@GeneratedValue
-	private Integer id;
-
 	private String comments;
 
-	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinColumn(name="book_id")
-	private List<Book> books;
-	
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Employee employee;
 	
@@ -42,19 +31,11 @@ public class Rent implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private RentStatusEnum status;
 
-	@Temporal(TemporalType.DATE)
-	private Date startDate;
+	@EmbeddedId
+	private RentPK rentPK;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date endDate;
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getComments() {
 		return comments;
@@ -62,14 +43,6 @@ public class Rent implements Serializable {
 
 	public void setComments(String comments) {
 		this.comments = comments;
-	}
-
-	public List<Book> getBooks(){
-		return books;
-	}
-	
-	public void setBooks(List<Book> books){
-		this.books = books;
 	}
 	
 	public Employee getEmployee(){
@@ -96,14 +69,22 @@ public class Rent implements Serializable {
 		this.status = status;
 	}
 
+	public Book getBook() {
+		return rentPK.getBook();
+	}
+
+	public void setBook(Book book) {
+		rentPK.setBook(book);
+	}
+	
 	public Date getStartDate() {
-		return startDate;
+		return rentPK.getStartDate();
 	}
 
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		rentPK.setStartDate(startDate);
 	}
-	
+
 	public Date getEndDate() {
 		return endDate;
 	}
@@ -111,5 +92,5 @@ public class Rent implements Serializable {
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
-		
+	
 }

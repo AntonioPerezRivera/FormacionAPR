@@ -43,7 +43,7 @@ public class User implements Serializable {
 	private Date membershipDate;
 
 	@OneToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	List<Rent> rents;
+	private List<Rent> rents;
 	
 	public Integer getId() {
 		return id;

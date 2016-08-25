@@ -2,16 +2,12 @@ package com.at.library.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -38,9 +34,6 @@ public class Book implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startDate;
 
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.LAZY)
-	private List<Rent> rents;
-	
 	public Integer getId() {
 		return id;
 	}
@@ -87,14 +80,6 @@ public class Book implements Serializable {
 
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
-	}
-	
-	public List<Rent> getRents(){
-		return rents;
-	}
-	
-	public void setRents(List<Rent> rents){
-		this.rents = rents;
 	}
 
 }

@@ -9,8 +9,6 @@ public class RentDTO implements Serializable {
 
 	private static final long serialVersionUID = 7364756623634860483L;
 
-	private Integer id;
-
 	private String comments;
 
 	private List<BookDTO> books;
@@ -20,15 +18,6 @@ public class RentDTO implements Serializable {
 	private UserDTO user;
 
 	private RentStatusEnum status;
-
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getComments() {
 		return comments;
@@ -72,7 +61,7 @@ public class RentDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RentDTO [id=" + id + ", comments=" + comments + ", books=" + books + ", employee=" + employee
+		return "RentDTO [comments=" + comments + ", books=" + books + ", employee=" + employee
 				+ ", user=" + user + ", status=" + status + "]";
 	}
 

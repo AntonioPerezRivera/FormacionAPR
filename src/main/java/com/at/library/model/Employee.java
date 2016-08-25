@@ -36,7 +36,7 @@ public class Employee implements Serializable {
 	private Date startWorking;
 	
 	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE},fetch=FetchType.LAZY)
-	List<Rent> managedRents;
+	private List<Rent> managedRents;
 	
 	public Integer getId() {
 		return id;

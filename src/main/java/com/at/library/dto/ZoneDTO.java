@@ -3,22 +3,24 @@ package com.at.library.dto;
 import java.io.Serializable;
 import java.util.List;
 
+import com.at.library.model.Room;
+
 public class ZoneDTO implements Serializable {
 
 	private static final long serialVersionUID = -2318152166576404732L;
 
-	private Integer id;
-
 	private String name;
 
-	List<BookDTO> books;
+	private List<BookDTO> books;
 	
-	public Integer getId() {
-		return id;
+	private Room room;
+	
+	public Room getRoom() {
+		return room;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setRoom(Room room) {
+		this.room = room;
 	}
 
 	public String getName(){
@@ -39,7 +41,7 @@ public class ZoneDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "ZoneDTO [id=" + id + ", name=" + name + ", books=" + books + "]";
+		return "ZoneDTO [name=" + name + ", books=" + books + "]";
 	}
 
 }

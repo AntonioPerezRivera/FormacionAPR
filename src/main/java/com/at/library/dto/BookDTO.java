@@ -7,8 +7,6 @@ public class BookDTO implements Serializable {
 
 	private static final long serialVersionUID = 1583585532736761521L;
 
-	private Integer id;
-
 	private String isbn;
 
 	private String title;
@@ -16,14 +14,6 @@ public class BookDTO implements Serializable {
 	private String author;
 	
 	private List<RentDTO> rents;
-	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	public String getIsbn() {
 		return isbn;
@@ -59,7 +49,7 @@ public class BookDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "BookDTO [id=" + id + ", isbn=" + isbn + ", title=" + title + ", author=" + author + ", rents=" + rents
+		return "BookDTO [isbn=" + isbn + ", title=" + title + ", author=" + author + ", rents=" + rents
 				+ "]";
 	}
 	

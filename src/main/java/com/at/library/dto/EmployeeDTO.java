@@ -6,8 +6,6 @@ public class EmployeeDTO implements Serializable {
 
 	private static final long serialVersionUID = 627938495763858134L;
 
-	private Integer id;
-
 	private String dni;
 
 	private String name;
@@ -18,14 +16,6 @@ public class EmployeeDTO implements Serializable {
 	
 	private String address;
 	
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
 	public String getDni() {
 		return dni;
 	}
@@ -68,7 +58,7 @@ public class EmployeeDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "EmployeeDTO [id=" + id + ", dni=" + dni + ", name=" + name + ", surname1=" + surname1 + ", surname2="
+		return "EmployeeDTO [dni=" + dni + ", name=" + name + ", surname1=" + surname1 + ", surname2="
 				+ surname2 + ", address=" + address + "]";
 	}
 
