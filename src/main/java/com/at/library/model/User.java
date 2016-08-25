@@ -15,7 +15,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.UserEnum;
 
 @Entity
 public class User implements Serializable {
@@ -37,10 +37,10 @@ public class User implements Serializable {
 	private String address;
 
 	@Enumerated(EnumType.STRING)
-	private StatusEnum userStatus;
+	private UserEnum userStatus;
 
 	@Temporal(TemporalType.DATE)
-	private Date membershipDate;
+	private Date membershipDate = new Date();
 
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
@@ -94,11 +94,11 @@ public class User implements Serializable {
 		this.address = address;
 	}
 	
-	public StatusEnum getUserStatus() {
+	public UserEnum getUserStatus() {
 		return userStatus;
 	}
 
-	public void setUserStatus(StatusEnum userStatus) {
+	public void setUserStatus(UserEnum userStatus) {
 		this.userStatus = userStatus;
 	}
 
@@ -110,7 +110,6 @@ public class User implements Serializable {
 		this.membershipDate = membershipDate;
 	}
 
-	
 	public List<Rent> getRents(){
 		return rents;
 	}

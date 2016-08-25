@@ -30,12 +30,30 @@ public interface UserService {
 	 */
 	User transform(UserDTO user);
 
+	/**
+	 * Crea un usuario
+	 * @param user
+	 * @return UserDTO
+	 */
 	UserDTO create(UserDTO user);
 
+	/**
+	 * Devuelve, si existe, un usuario cuyo id concida con el introducido
+	 * @param id
+	 * @return UserDTO
+	 */
 	UserDTO getById(Integer id);
 
+	/**
+	 * Modifica un usuario concreto
+	 * @param user
+	 */
 	void update(UserDTO user);
 
+	/**
+	 * Permite eliminar un usuario si existe el usuario con el id introducido
+	 * @param id
+	 */
 	void delete(Integer id);
 
 }

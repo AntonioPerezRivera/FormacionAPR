@@ -1,9 +1,8 @@
 package com.at.library.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
-import com.at.library.enums.StatusEnum;
+import com.at.library.enums.UserEnum;
 
 public class UserDTO implements Serializable {
 
@@ -19,9 +18,7 @@ public class UserDTO implements Serializable {
 	
 	private String address;
 
-	private StatusEnum userStatus;
-
-	List<RentDTO> rents;
+	private UserEnum userStatus;
 
 	public String getDni() {
 		return dni;
@@ -63,26 +60,18 @@ public class UserDTO implements Serializable {
 		this.address = address;
 	}
 	
-	public StatusEnum getUserStatus() {
+	public UserEnum getUserStatus() {
 		return userStatus;
 	}
 
-	public void setUserStatus(StatusEnum userStatus) {
+	public void setUserStatus(UserEnum userStatus) {
 		this.userStatus = userStatus;
-	}
-
-	public List<RentDTO> getRents(){
-		return rents;
-	}
-	
-	public void setRents(List<RentDTO> rents){
-		this.rents = rents;
 	}
 
 	@Override
 	public String toString() {
 		return "UserDTO [dni=" + dni + ", name=" + name + ", surname1=" + surname1 + ", surname2="
-				+ surname2 + ", address=" + address + ", userStatus=" + userStatus + ", rents=" + rents + "]";
+				+ surname2 + ", address=" + address + ", userStatus=" + userStatus + "]";
 	}
 	
 }

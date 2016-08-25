@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
+import com.at.library.enums.UserEnum;
 import com.at.library.model.User;
 
 @Service
@@ -47,6 +48,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO create(UserDTO user) {
 		User u = transform(user);
+		u.setUserStatus(UserEnum.ALLOWED);
 		return transform(userDao.save(u));
 	}
 
