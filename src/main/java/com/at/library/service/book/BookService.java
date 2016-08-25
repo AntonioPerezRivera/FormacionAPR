@@ -37,19 +37,39 @@ public interface BookService {
 	 */
 	List<BookDTO> transform(List<Book> book);
 	
-	// Crea un libro
+	/**
+	 * Crea un libroDTO
+	 * @param BookDTO
+	 * @return BookDTO
+	 */
 	BookDTO create(BookDTO book);
 	
-	// Busca un libro por id
+	/**
+	 * Devuelve, si existe, un libro cuyo id corresponda con el introducido
+	 * @param id
+	 * @return BookDTO
+	 */
 	BookDTO getById(Integer id);
 
-	// Busca un libro por nombre
+	/**
+	 * Devuelve, si existe, los libros cuyo nombre, isbn o autor correspondan con los introducidos
+	 * @param name
+	 * @param isbn
+	 * @param author
+	 * @return List<BookDTO>
+	 */
 	List<BookDTO> getByParams(String name, String isbn, String author);
 	
-	// Modifica un libro
+	/**
+	 * Permite la modificacion de un libro concreto
+	 * @param book
+	 */
 	void update(BookDTO book);
 
-	// Borra un libro
+	/**
+	 * Elimina un libro cuyo id corresponda con el introducido
+	 * @param id
+	 */
 	void delete(Integer id);
 
 
