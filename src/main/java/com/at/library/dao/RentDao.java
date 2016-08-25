@@ -7,5 +7,5 @@ import com.at.library.model.Rent;
 
 @Repository
 public interface RentDao extends CrudRepository<Rent, Integer> {
-
+	
 }

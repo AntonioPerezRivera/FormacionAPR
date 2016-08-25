@@ -38,6 +38,12 @@ public class Book implements Serializable {
 		return id;
 	}
 
+	@Override
+	public String toString() {
+		return "Book [isbn=" + isbn + ", title=" + title + ", author=" + author + ", status=" + status
+				+ ", startDate=" + startDate + "]";
+	}
+
 	public void setId(Integer id) {
 		this.id = id;
 	}

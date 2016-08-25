@@ -11,6 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.pk.RentPK;
@@ -22,9 +23,11 @@ public class Rent implements Serializable {
 
 	private String comments;
 
+	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
 	private Employee employee;
 	
+	@NotNull
 	@ManyToOne(fetch=FetchType.LAZY)
 	private User user;
 

@@ -1,7 +1,6 @@
 package com.at.library.dto;
 
 import java.io.Serializable;
-import java.util.List;
 
 import com.at.library.enums.RentStatusEnum;
 
@@ -11,7 +10,7 @@ public class RentDTO implements Serializable {
 
 	private String comments;
 
-	private List<BookDTO> books;
+	private BookDTO book;
 	
 	private EmployeeDTO employee;
 	
@@ -27,12 +26,12 @@ public class RentDTO implements Serializable {
 		this.comments = comments;
 	}
 
-	public List<BookDTO> getBooks(){
-		return books;
+	public BookDTO getBook(){
+		return book;
 	}
 	
-	public void setBooks(List<BookDTO> books){
-		this.books = books;
+	public void setBook(BookDTO book){
+		this.book = book;
 	}
 	
 	public EmployeeDTO getEmployee(){
@@ -61,8 +60,7 @@ public class RentDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "RentDTO [comments=" + comments + ", books=" + books + ", employee=" + employee
+		return "RentDTO [comments=" + comments + ", book=" + book + ", employee=" + employee
 				+ ", user=" + user + ", status=" + status + "]";
 	}
-
 }

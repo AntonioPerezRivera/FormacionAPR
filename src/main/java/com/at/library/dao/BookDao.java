@@ -10,6 +10,7 @@ import com.at.library.model.Book;
 @Repository
 public interface BookDao extends CrudRepository<Book, Integer> {
 
+	
 	List<Book> findByAuthor(String author);
 
 	List<Book> findByIsbn(String isbn);

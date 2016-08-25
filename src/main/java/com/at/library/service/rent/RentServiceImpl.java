@@ -10,7 +10,10 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
+import com.at.library.model.Book;
+import com.at.library.model.Employee;
 import com.at.library.model.Rent;
+import com.at.library.model.User;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -41,7 +44,16 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public Rent transform(RentDTO rent) {
-		return dozer.map(rent, Rent.class);
+		Rent r = new Rent();
+		Book b = dozer.map(rent.getBook(), Book.class);
+		Employee e = dozer.map(rent.getEmployee(), Employee.class);
+		User u = dozer.map(rent.getUser(), User.class);
+		r.setStartDate(r.getStartDate());
+		r.setBook(b);
+		r.setComments(rent.getComments());
+		r.setEmployee(e);
+		r.setUser(u);
+		return r;
 	}
 
 	@Override
