@@ -15,7 +15,7 @@ public interface BookService {
 	List<BookDTO> findAll();
 
 	/**
-	 * Transfrma un libro en un libroDTO
+	 * Transforma un libro en un libroDTO
 	 * 
 	 * @param book
 	 * @return
