@@ -6,6 +6,7 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 
 @Entity
@@ -19,6 +20,7 @@ public class Room implements Serializable {
 	private String address;
 	
 	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name="room_name")
 	private List<Zone> zones;
 	
 	public String getName(){

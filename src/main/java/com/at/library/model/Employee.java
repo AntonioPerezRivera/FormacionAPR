@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -35,9 +35,22 @@ public class Employee implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date startWorking;
 	
-	@OneToMany(cascade={CascadeType.REFRESH,CascadeType.MERGE},fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name = "employee_id")
 	private List<Rent> managedRents;
 	
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name = "employee_id")
+	private List<User> users;
+	
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	public Integer getId() {
 		return id;
 	}
