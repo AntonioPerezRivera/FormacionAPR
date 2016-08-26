@@ -85,4 +85,11 @@ public interface BookService {
 	 * Modifica el estado de un libro concreto
 	 */
 	void modifyStatus(Book b, StatusEnum s);
+	
+	/**
+	 * Comprueba si el estado de un libro se encuentra en disponible
+	 * @param b
+	 * @return
+	 */
+	boolean checkStatus(Book b);
 }

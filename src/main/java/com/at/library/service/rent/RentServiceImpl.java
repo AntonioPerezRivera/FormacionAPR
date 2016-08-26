@@ -67,29 +67,37 @@ public class RentServiceImpl implements RentService {
 	public RentDTO create(RentPostDTO rentDto) {
 		
 		Book b = bookService.getById(rentDto.getIdLibro());
-		User u = userService.getById(rentDto.getIdUser());
-		Employee e = employeeService.getById(rentDto.getIdEmployee());
+		
+		if(bookService.checkStatus(b) == true){
 			
-		Rent rent = new Rent();
+			User u = userService.getById(rentDto.getIdUser());
+			Employee e = employeeService.getById(rentDto.getIdEmployee());
+				
+			Rent rent = new Rent();
+			
+			rent.setBook(b);
+			rent.setUser(u);
+			rent.setEmployee(e);
+			
+			Date d = new Date();
+			rent.setInitDate(d);
+			
+			// Se le suman tres dias a la fecha actual
+			Calendar cal = Calendar.getInstance();
+			cal.setTime(d);
+			cal.add(Calendar.DATE, 3);
+			d = cal.getTime();
+			
+			rent.setEndDate(d);
+			rent.setStatus(RentStatusEnum.ACTIVE);
+			rentDao.save(rent);
+			bookService.modifyStatus(b, StatusEnum.DISABLE);
+			return transform(rent);
+		}
 		
-		rent.setBook(b);
-		rent.setUser(u);
-		rent.setEmployee(e);
-		
-		Date d = new Date();
-		rent.setInitDate(d);
-		
-		// Se le suman tres dias a la fecha actual
-		Calendar cal = Calendar.getInstance();
-		cal.setTime(d);
-		cal.add(Calendar.DATE, 3);
-		d = cal.getTime();
-		
-		rent.setEndDate(d);
-		rent.setStatus(RentStatusEnum.ACTIVE);
-		rentDao.save(rent);
-		bookService.modifyStatus(b, StatusEnum.DISABLE);
-		return transform(rent);
+		else{
+			return new RentDTO();
+		}
 	}
 
 	@Override

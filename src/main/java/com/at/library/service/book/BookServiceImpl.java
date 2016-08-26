@@ -133,5 +133,13 @@ public class BookServiceImpl implements BookService {
 		b.setStatus(s);
 		bookDao.save(b);
 	}
+	
+	@Override
+	public boolean checkStatus(Book b){
+		if(b.getStatus() == StatusEnum.ACTIVE)
+			return true;
+		else
+			return false;
+	}
 
 }
