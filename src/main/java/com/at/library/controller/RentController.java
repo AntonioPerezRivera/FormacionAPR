@@ -53,9 +53,9 @@ public class RentController {
 		rentService.delete(id);
 	}
 	
-	/*@RequestMapping(value="/restore/{id}", method={RequestMethod.PUT})
+	@RequestMapping(value="/restore/{id}", method={RequestMethod.PUT})
 	public void restore(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a proceder a realizar una devolucion en el alquiler con id %s", id));
 		rentService.restore(id);
-	}*/
+	}
 }

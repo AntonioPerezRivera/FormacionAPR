@@ -123,4 +123,13 @@ public class RentServiceImpl implements RentService {
 		return transform(b);
 	}
 
+	@Override
+	public void restore(Integer id) {
+		Rent r = rentDao.findOne(id);
+		Book b = r.getBook();
+		r.setStatus(RentStatusEnum.TERMINATED);
+		bookService.modifyStatus(b, StatusEnum.ACTIVE);
+		rentDao.save(r);
+	}
+
 }
