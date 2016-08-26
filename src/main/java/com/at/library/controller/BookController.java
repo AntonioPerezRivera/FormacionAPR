@@ -38,7 +38,7 @@ public class BookController {
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
 	public BookDTO get(@PathVariable("id") Integer id){
 		log.debug(String.format("Recuperando libro con id: %s",id));
-		return bookService.getById(id);
+		return bookService.getByIdDTO(id);
 	}
 	
 	@RequestMapping(value="/buscar",method={RequestMethod.GET})

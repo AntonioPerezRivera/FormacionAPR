@@ -11,7 +11,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.validation.constraints.NotNull;
+import javax.persistence.Transient;
 
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.pk.RentPK;
@@ -19,49 +19,85 @@ import com.at.library.pk.RentPK;
 @Entity
 public class Rent implements Serializable {
 
-	private static final long serialVersionUID = -3355087313344614141L;
+	private static final long serialVersionUID = -4158742374158942716L;
 
-	private String comments;
-
-	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
-	private Employee employee;
-	
-	@NotNull
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Employee employee;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date endDate;
+	
+	@EmbeddedId
+	private RentPK rentPK = new RentPK();
 
 	@Enumerated(EnumType.STRING)
 	private RentStatusEnum status;
-
-	@EmbeddedId
-	private RentPK rentPK;
 	
+	// Almacena la fecha en la que el usuario lo devuelve
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date endDate;
+	private Date returnDate;
 
-	public String getComments() {
-		return comments;
+	public RentPK getPk() {
+		return rentPK;
 	}
 
-	public void setComments(String comments) {
-		this.comments = comments;
+	public void setPk(RentPK rentPK) {
+		this.rentPK = rentPK;
 	}
-	
-	public Employee getEmployee(){
-		return employee;
-	}
-	
-	public void setEmployee(Employee employee){
-		this.employee = employee;
-	}
-	
-	public User getUser(){
+
+	public User getUser() {
 		return user;
 	}
-	
-	public void setUser(User user){
+
+	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public Date getReturnDate() {
+		return returnDate;
+	}
+
+	public void setReturnDate(Date returnDate) {
+		this.returnDate = returnDate;
+	}
+	
+	@Transient
+	public Book getBook(){
+		return rentPK.getBook();
+	}
+	
+	@Transient
+	public void setBook(Book book){
+		rentPK.setBook(book);
+	}
+	
+	@Transient
+	public Date getInitDate(){
+		return rentPK.getInitDate();
+	}
+	
+	@Transient
+	public void setInitDate(Date initDate){
+		rentPK.setInitDate(initDate);
 	}
 
 	public RentStatusEnum getStatus() {
@@ -72,28 +108,9 @@ public class Rent implements Serializable {
 		this.status = status;
 	}
 
-	public Book getBook() {
-		return rentPK.getBook();
+	@Override
+	public String toString() {
+		return "Rent [rentPK=" + rentPK + ", user=" + user + ", employee=" + employee + ", endDate=" + endDate + ", returnDate="
+				+ returnDate + "]";
 	}
-
-	public void setBook(Book book) {
-		rentPK.setBook(book);
-	}
-	
-	public Date getStartDate() {
-		return rentPK.getStartDate();
-	}
-
-	public void setStartDate(Date startDate) {
-		rentPK.setStartDate(startDate);
-	}
-
-	public Date getEndDate() {
-		return endDate;
-	}
-
-	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
-	}
-	
 }

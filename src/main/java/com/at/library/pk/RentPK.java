@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Embeddable;
+import javax.persistence.FetchType;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -11,25 +12,22 @@ import javax.persistence.TemporalType;
 import com.at.library.model.Book;
 
 @Embeddable
-public class RentPK implements Serializable{
-    
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1467004248823123060L;
+public class RentPK implements Serializable {
+
+	private static final long serialVersionUID = 7444334233029230055L;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date startDate;
-	
-	@OneToOne
+	private Date initDate;
+
+	@OneToOne(fetch = FetchType.LAZY)
 	private Book book;
 
-	public Date getStartDate() {
-		return startDate;
+	public Date getInitDate() {
+		return initDate;
 	}
 
-	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+	public void setInitDate(Date initDate) {
+		this.initDate = initDate;
 	}
 
 	public Book getBook() {
@@ -39,5 +37,9 @@ public class RentPK implements Serializable{
 	public void setBook(Book book) {
 		this.book = book;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "RentPK [initDate=" + initDate + ", book=" + book + "]";
+	}
 }

@@ -53,9 +53,15 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO getById(Integer id) {
+	public UserDTO getByIdDTO(Integer id) {
 		User u = userDao.findOne(id);
 		return transform(u);
+	}
+	
+	@Override
+	public User getById(Integer id){
+		User u = userDao.findOne(id);
+		return u;
 	}
 
 	@Override

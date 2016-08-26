@@ -42,7 +42,7 @@ public interface UserService {
 	 * @param id
 	 * @return UserDTO
 	 */
-	UserDTO getById(Integer id);
+	User getById(Integer id);
 
 	/**
 	 * Modifica un usuario concreto
@@ -55,5 +55,7 @@ public interface UserService {
 	 * @param id
 	 */
 	void delete(Integer id);
+
+	UserDTO getByIdDTO(Integer id);
 
 }

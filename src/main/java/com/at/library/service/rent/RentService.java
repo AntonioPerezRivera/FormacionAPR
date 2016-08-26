@@ -3,6 +3,7 @@ package com.at.library.service.rent;
 import java.util.List;
 
 import com.at.library.dto.RentDTO;
+import com.at.library.dto.RentPostDTO;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -35,15 +36,24 @@ public interface RentService {
 	 * @param rent
 	 * @return RentDTO
 	 */
-	RentDTO create(RentDTO rent);
 
+	RentDTO create(RentPostDTO rent);
+	
+	/**
+	 * Devuelve, si existe, un alquiler cuyo id coincida con el parametro introducido
+	 * @param id
+	 * @return Rent
+	 */
+	Rent getById(Integer id);
+
+	
 	/**
 	 * Devuelve, si existe, un alquilerDTO cuyo id coincida con el parametro introducido
 	 * @param id
 	 * @return RentDTO
 	 */
-	RentDTO getById(Integer id);
-
+	RentDTO getByIdDTO(Integer id);
+	
 	/**
 	 * Permite modificar un alquiler concreto
 	 * @param rent
@@ -60,6 +70,7 @@ public interface RentService {
 	 * Permite efectuar la devolución en un alquiler concreto cuyo id coincida con el parametro introducido
 	 * @param id
 	 */
-	void restore(Integer id);
+	//void restore(Integer id);
+
 
 }

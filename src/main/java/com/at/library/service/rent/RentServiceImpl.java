@@ -1,6 +1,8 @@
 package com.at.library.service.rent;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,15 +10,18 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.at.library.dao.BookDao;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
+import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
 import com.at.library.model.User;
+import com.at.library.service.book.BookService;
+import com.at.library.service.employee.EmployeeService;
+import com.at.library.service.user.UserService;
 
 @Service
 public class RentServiceImpl implements RentService {
@@ -25,20 +30,25 @@ public class RentServiceImpl implements RentService {
 	private RentDao rentDao;
 	
 	@Autowired
-	private BookDao bookDao;
+	private BookService bookService;
+	
+	@Autowired 
+	private UserService userService;
+	
+	@Autowired
+	private EmployeeService employeeService;
 
 	@Autowired
 	private DozerBeanMapper dozer;
 
 	@Override
 	public List<RentDTO> findAll() {
-		final Iterable<Rent> findAll = rentDao.findAll();
-		final Iterator<Rent> iterator = findAll.iterator();
+		final Iterator<Rent> iterator = rentDao.findAll().iterator();
 		final List<RentDTO> res = new ArrayList<>();
+		
 		while (iterator.hasNext()) {
 			final Rent r = iterator.next();
-			final RentDTO rDTO = transform(r);
-			res.add(rDTO);
+			res.add(transform(r));
 		}
 		return res;
 	}
@@ -50,49 +60,59 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public Rent transform(RentDTO rent) {
-		Rent r = new Rent();
-		Book b = dozer.map(rent.getBook(), Book.class);
-		Employee e = dozer.map(rent.getEmployee(), Employee.class);
-		User u = dozer.map(rent.getUser(), User.class);
-		r.setStartDate(r.getStartDate());
-		r.setBook(b);
-		r.setComments(rent.getComments());
-		r.setEmployee(e);
-		r.setUser(u);
-		return r;
+		return dozer.map(rent, Rent.class);
 	}
 
 	@Override
-	public RentDTO create(RentDTO rent) {
-		Rent r = transform(rent);
-		return transform(rentDao.save(r));
-	}
-
-	@Override
-	public RentDTO getById(Integer id) {
-		Rent r = rentDao.findOne(id);
-		return transform(r);
+	public RentDTO create(RentPostDTO rentDto) {
+		
+		Book b = bookService.getById(rentDto.getIdLibro());
+		User u = userService.getById(rentDto.getIdUser());
+		Employee e = employeeService.getById(rentDto.getIdEmployee());
+			
+		Rent rent = new Rent();
+		
+		rent.setBook(b);
+		rent.setUser(u);
+		rent.setEmployee(e);
+		
+		Date d = new Date();
+		rent.setInitDate(d);
+		
+		// Se le suman tres dias a la fecha actual
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(d);
+		cal.add(Calendar.DATE, 3);
+		d = cal.getTime();
+		
+		rent.setEndDate(d);
+		rent.setStatus(RentStatusEnum.ACTIVE);
+		rentDao.save(rent);
+		bookService.modifyStatus(b, StatusEnum.DISABLE);
+		return transform(rent);
 	}
 
 	@Override
 	public void update(RentDTO rent) {
-		Rent r = transform(rent);
-		transform(rentDao.save(r));
+		Rent b = transform(rent);
+		rentDao.save(b);		
 	}
-
+	
 	@Override
 	public void delete(Integer id) {
 		rentDao.delete(id);
 	}
-
+	
 	@Override
-	public void restore(Integer id) {
-		Rent r = rentDao.findOne(id);
-		Book b = r.getBook();
-		r.setStatus(RentStatusEnum.TERMINATED);
-		b.setStatus(StatusEnum.ACTIVE);
-		rentDao.save(r);
-		bookDao.save(b);
+	public Rent getById(Integer id) {
+		Rent b = rentDao.findOne(id);
+		return b;
+	}
+	
+	@Override
+	public RentDTO getByIdDTO(Integer id){
+		Rent b = rentDao.findOne(id);
+		return transform(b);
 	}
 
 }

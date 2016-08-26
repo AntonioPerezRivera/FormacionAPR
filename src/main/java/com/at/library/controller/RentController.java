@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
+import com.at.library.dto.RentPostDTO;
 import com.at.library.service.rent.RentService;
 
 @RestController
@@ -29,7 +30,7 @@ public class RentController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public RentDTO create(@RequestBody RentDTO rent){
+	public RentDTO create(@RequestBody RentPostDTO rent){
 		log.debug(String.format("Vamos a crear el alquiler %s", rent));
 		return rentService.create(rent);
 	}
@@ -37,7 +38,7 @@ public class RentController {
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
 	public RentDTO get(@PathVariable("id") Integer id){
 		log.debug(String.format("Recuperando alquiler con id: %s",id));
-		return rentService.getById(id);
+		return rentService.getByIdDTO(id);
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
@@ -52,9 +53,9 @@ public class RentController {
 		rentService.delete(id);
 	}
 	
-	@RequestMapping(value="/restore/{id}", method={RequestMethod.PUT})
+	/*@RequestMapping(value="/restore/{id}", method={RequestMethod.PUT})
 	public void restore(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a proceder a realizar una devolucion en el alquiler con id %s", id));
 		rentService.restore(id);
-	}
+	}*/
 }

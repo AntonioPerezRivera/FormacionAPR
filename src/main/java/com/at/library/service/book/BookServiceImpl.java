@@ -1,15 +1,18 @@
 package com.at.library.service.book;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
+import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 
 @Service
@@ -22,6 +25,7 @@ public class BookServiceImpl implements BookService {
 	private DozerBeanMapper dozer;
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<BookDTO> findAll() {
 		final Iterable<Book> findAll = bookDao.findAll();
 		final Iterator<Book> iterator = findAll.iterator();
@@ -59,11 +63,18 @@ public class BookServiceImpl implements BookService {
 	@Override
 	public BookDTO create(BookDTO book) {
 		Book b = transform(book);
+		b.setStartDate(new Date());
 		return transform(bookDao.save(b));
 	}
 
 	@Override
-	public BookDTO getById(Integer id) {
+	public Book getById(Integer id) {
+		Book b = bookDao.findOne(id);
+		return b;
+	}
+	
+	@Override
+	public BookDTO getByIdDTO(Integer id){
 		Book b = bookDao.findOne(id);
 		return transform(b);
 	}
@@ -113,9 +124,14 @@ public class BookServiceImpl implements BookService {
 		// Se le pasa todo
 		else{
 			 b = transform(bookDao.findByTitleAndIsbnAndAuthor(name,isbn,author));
-		}
-		
+		}		
 		return b;
+	}
+
+	@Override
+	public void modifyStatus(Book b, StatusEnum s) {
+		b.setStatus(s);
+		bookDao.save(b);
 	}
 
 }

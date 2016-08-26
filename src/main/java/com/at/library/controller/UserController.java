@@ -37,7 +37,7 @@ public class UserController {
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
 	public UserDTO get(@PathVariable("id") Integer id){
 		log.debug(String.format("Recuperando usuario con id: %s",id));
-		return userService.getById(id);
+		return userService.getByIdDTO(id);
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})

@@ -51,11 +51,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public EmployeeDTO getById(Integer id) {
+	public EmployeeDTO getByIdDTO(Integer id) {
 		Employee e = employeeDao.findOne(id);
 		return transform(e);
 	}
-
+	
+	@Override
+	public Employee getById(Integer id) {
+		Employee e = employeeDao.findOne(id);
+		return e;
+	}
+	
 	@Override
 	public void update(EmployeeDTO employee) {
 		Employee e = transform(employee);

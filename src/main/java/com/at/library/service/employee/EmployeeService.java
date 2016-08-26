@@ -32,10 +32,12 @@ public interface EmployeeService {
 
 	EmployeeDTO create(EmployeeDTO employee);
 
-	EmployeeDTO getById(Integer id);
+	Employee getById(Integer id);
 
 	void update(EmployeeDTO employee);
 
 	void delete(Integer id);
+
+	EmployeeDTO getByIdDTO(Integer id);
 
 }
