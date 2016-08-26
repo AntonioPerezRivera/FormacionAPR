@@ -8,8 +8,11 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.at.library.dao.BookDao;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
+import com.at.library.enums.RentStatusEnum;
+import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -20,6 +23,9 @@ public class RentServiceImpl implements RentService {
 
 	@Autowired
 	private RentDao rentDao;
+	
+	@Autowired
+	private BookDao bookDao;
 
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -77,6 +83,16 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public void delete(Integer id) {
 		rentDao.delete(id);
+	}
+
+	@Override
+	public void restore(Integer id) {
+		Rent r = rentDao.findOne(id);
+		Book b = r.getBook();
+		r.setStatus(RentStatusEnum.TERMINATED);
+		b.setStatus(StatusEnum.ACTIVE);
+		rentDao.save(r);
+		bookDao.save(b);
 	}
 
 }

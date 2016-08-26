@@ -26,16 +26,40 @@ public interface RentService {
 	 * Transforma un alquilerDTO en un alquiler
 	 * 
 	 * @param rent
-	 * @return
+	 * @return Rent
 	 */
 	Rent transform(RentDTO Rent);
 
+	/**
+	 * Permite crear un nuevo alquiler
+	 * @param rent
+	 * @return RentDTO
+	 */
 	RentDTO create(RentDTO rent);
 
+	/**
+	 * Devuelve, si existe, un alquilerDTO cuyo id coincida con el parametro introducido
+	 * @param id
+	 * @return RentDTO
+	 */
 	RentDTO getById(Integer id);
 
+	/**
+	 * Permite modificar un alquiler concreto
+	 * @param rent
+	 */
 	void update(RentDTO rent);
 
+	/**
+	 * Permite eliminar un alquiler concreto
+	 * @param id
+	 */
 	void delete(Integer id);
+
+	/**
+	 * Permite efectuar la devolución en un alquiler concreto cuyo id coincida con el parametro introducido
+	 * @param id
+	 */
+	void restore(Integer id);
 
 }
