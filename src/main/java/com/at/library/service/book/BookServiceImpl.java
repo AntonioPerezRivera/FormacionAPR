@@ -92,39 +92,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDTO> getByParams(String name, String isbn, String author) {
-		List<BookDTO> b;
-		// No se pasa ningun parametro
-		if(name == null && isbn == null && author == null){
-			return null;
-		}
-		// Solo se pasa el autor
-		else if(name == null && isbn == null){
-			b = transform(bookDao.findByAuthor(author));
-		}
-		// Solo se pasa el isbn
-		else if(name == null && author == null){
-			b = transform(bookDao.findByIsbn(isbn));
-		}
-		// Solo se pasa el nombre
-		else if(isbn == null && author == null){
-			b = transform(bookDao.findByTitle(name));
-		}
-		// Se pasa el isbn y el autor
-		else if(name == null){
-			b = transform(bookDao.findByIsbnAndAuthor(isbn,author));
-		}
-		// Se pasa el nombre y el autor
-		else if(isbn == null){
-			b = transform(bookDao.findByTitleAndAuthor(name,author));
-		}
-		// Se pasa el nombre y el isbn
-		else if(author == null){
-			b = transform(bookDao.findByTitleAndIsbn(name,isbn));
-		}
-		// Se le pasa todo
-		else{
-			 b = transform(bookDao.findByTitleAndIsbnAndAuthor(name,isbn,author));
-		}		
+		List<BookDTO> b = transform(bookDao.findByAuthorOrTitleOrIsbn(author, name, isbn));
 		return b;
 	}
 

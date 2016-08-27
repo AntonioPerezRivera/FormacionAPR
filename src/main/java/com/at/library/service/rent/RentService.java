@@ -67,7 +67,7 @@ public interface RentService {
 	void delete(Integer id);
 
 	/**
-	 * Permite efectuar la devolución en un alquiler concreto cuyo id coincida con el parametro introducido
+	 * Permite efectuar la devolución en un alquiler concreto cuyo id del libro coincida con el parametro introducido
 	 * @param id
 	 */
 	void restore(Integer book_id);
