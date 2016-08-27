@@ -17,7 +17,7 @@ public class RentDTO implements Serializable {
 	private UserDTO user;
 
 	private RentStatusEnum status;
-
+	
 	public String getComments() {
 		return comments;
 	}

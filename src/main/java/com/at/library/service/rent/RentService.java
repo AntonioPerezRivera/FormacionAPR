@@ -70,7 +70,7 @@ public interface RentService {
 	 * Permite efectuar la devolución en un alquiler concreto cuyo id coincida con el parametro introducido
 	 * @param id
 	 */
-	void restore(Integer id);
+	void restore(Integer book_id);
 
 
 }

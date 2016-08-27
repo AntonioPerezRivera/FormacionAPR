@@ -124,10 +124,11 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public void restore(Integer id) {
-		Rent r = rentDao.findOne(id);
-		Book b = r.getBook();
+	public void restore(Integer book_id) {
+		Book b = bookService.getById(book_id);
+		Rent r = rentDao.checkReturnNull(b.getId());
 		r.setStatus(RentStatusEnum.TERMINATED);
+		r.setEndDate(new Date());
 		bookService.modifyStatus(b, StatusEnum.ACTIVE);
 		rentDao.save(r);
 	}
