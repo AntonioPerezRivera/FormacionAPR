@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDao;
-import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.enums.UserEnum;
 import com.at.library.model.User;
 import com.at.library.service.rent.RentService;
@@ -49,6 +49,18 @@ public class UserServiceImpl implements UserService {
 	public User transform(UserDTO rent) {
 		return dozer.map(rent, User.class);
 	}
+	
+	@Override
+	public List<UserDTO> transform(List<User> user) {	
+		final Iterator<User> iterator = user.iterator();
+		final List<UserDTO> res = new ArrayList<>();
+		while (iterator.hasNext()) {
+			final User b = iterator.next();
+			final UserDTO bDTO = transform(b);
+			res.add(bDTO);
+		}
+		return res;
+	}
 
 	@Override
 	public UserDTO create(UserDTO user) {
@@ -84,6 +96,12 @@ public class UserServiceImpl implements UserService {
 	public List<RentDTO> getRents(Integer id) {
 		List<RentDTO> r = rentService.getByUserId(id);
 		return r;
+	}
+
+	@Override
+	public List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address) {
+		List<UserDTO> b = transform(userDao.findByDniOrNameOrSurname1OrSurname2OrAddress(dni,name,surname1,surname2,address));
+		return b;
 	}
 
 }

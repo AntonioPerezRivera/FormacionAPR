@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
@@ -51,6 +52,17 @@ public class UserController {
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a modificar el usuario con id %s", id));
 		userService.delete(id);
+	}
+	
+	@RequestMapping(value="/search",method={RequestMethod.GET})
+	public List<UserDTO> get(@RequestParam(value="dni",required=false) String dni, 
+							 @RequestParam(value="name",required=false) String name, 
+							 @RequestParam(value="surname1",required=false) String surname1,
+							 @RequestParam(value="surname2",required=false) String surname2,
+							 @RequestParam(value="address",required=false) String address){
+		
+		log.debug(String.format("Recuperando usuario con dni: %s, nombre: %s, apellido 1: %s, apellido 2: %s, direccion: %s",dni,name,surname1,surname2,address));
+		return userService.getByParams(dni,name,surname1,surname2,address);
 	}
 	
 	@RequestMapping(value="/{id}/history", method={RequestMethod.GET})

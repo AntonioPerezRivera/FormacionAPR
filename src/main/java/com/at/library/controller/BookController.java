@@ -43,7 +43,10 @@ public class BookController {
 	}
 	
 	@RequestMapping(value="/search",method={RequestMethod.GET})
-	public List<BookDTO> get(@RequestParam(value="name",required=false) String name, @RequestParam(value="isbn",required=false) String isbn, @RequestParam(value="author",required=false) String author){
+	public List<BookDTO> get(@RequestParam(value="name",required=false) String name, 
+							 @RequestParam(value="isbn",required=false) String isbn, 
+							 @RequestParam(value="author",required=false) String author){
+		
 		log.debug(String.format("Recuperando libro con nombre: %s, isbn: %s y autor: %s",name,isbn,author));
 		return bookService.getByParams(name,isbn,author);
 	}

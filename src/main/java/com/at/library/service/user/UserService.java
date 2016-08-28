@@ -32,6 +32,13 @@ public interface UserService {
 	User transform(UserDTO user);
 
 	/**
+	 * Permite transformar una lista de usuarios en una lista de usuariosDTO
+	 * @param user
+	 * @return List<UserDTO>
+	 */
+	List<UserDTO> transform(List<User> user);
+	
+	/**
 	 * Crea un usuario
 	 * @param user
 	 * @return UserDTO
@@ -71,5 +78,17 @@ public interface UserService {
 	 * @return List<RentDTO>
 	 */
 	List<RentDTO> getRents(Integer id);
+
+	/**
+	 * Permite la busqueda de un usuario concreto
+	 * @param dni
+	 * @param name
+	 * @param surname1
+	 * @param surname2
+	 * @param address
+	 * @return List<UserDTO>
+	 */
+	List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address);
+
 
 }
