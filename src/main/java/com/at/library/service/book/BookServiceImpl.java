@@ -12,8 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
+import com.at.library.service.rent.RentService;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -23,6 +25,9 @@ public class BookServiceImpl implements BookService {
 
 	@Autowired
 	private DozerBeanMapper dozer;
+	
+	@Autowired
+	private RentService rentService;
 
 	@Override
 	@Transactional(readOnly = true)
@@ -110,4 +115,9 @@ public class BookServiceImpl implements BookService {
 			return false;
 	}
 
+	@Override
+	public List<RentDTO> getRents(Integer id) {
+		List<RentDTO> r = rentService.getByBookId(id);
+		return r;
+	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.service.book.BookService;
 
 @RestController
@@ -57,6 +58,13 @@ public class BookController {
 	public void delete(@PathVariable("id") Integer id){
 		log.debug(String.format("Vamos a modificar el libro con id %s", id));
 		bookService.delete(id);
+	}
+	
+	@RequestMapping(value="/{id}/history", method={RequestMethod.GET})
+	public List<RentDTO> history(@PathVariable("id") Integer id){
+		log.debug(String.format("Recuperando alquileres del libro con id %s", id));
+		List<RentDTO> r = bookService.getRents(id);
+		return r;
 	}
 
 }

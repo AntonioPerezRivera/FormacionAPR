@@ -3,6 +3,7 @@ package com.at.library.service.book;
 import java.util.List;
 
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.model.Book;
 
@@ -92,4 +93,11 @@ public interface BookService {
 	 * @return
 	 */
 	boolean checkStatus(Book b);
+
+	/**
+	 * Devuelve una lista con el historial de alquileres del libro con el id introducido
+	 * @param id
+	 * @return List<RentDTO>
+	 */
+	List<RentDTO> getRents(Integer id);
 }

@@ -16,5 +16,8 @@ public interface RentDao extends CrudRepository<Rent, Integer> {
 
 	@Query(value="SELECT r from Rent as r where r.user.id = ?1")
 	public List<Rent> findUserId(Integer id);
+
+	@Query(value="SELECT r from Rent as r where r.book.id = ?1")
+	public List<Rent> findBookId(Integer id);
 	
 }

@@ -145,4 +145,16 @@ public class RentServiceImpl implements RentService {
 		return res;
 	}
 
+	@Override
+	public List<RentDTO> getByBookId(Integer id) {
+		final Iterator<Rent> iterator = rentDao.findBookId(id).iterator();
+		final List<RentDTO> res = new ArrayList<>();
+		
+		while (iterator.hasNext()) {
+			final Rent r = iterator.next();
+			res.add(transform(r));
+		}
+		return res;
+	}
+	
 }
