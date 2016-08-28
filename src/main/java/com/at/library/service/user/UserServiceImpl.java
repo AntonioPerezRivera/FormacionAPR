@@ -9,15 +9,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.UserDao;
+import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
 import com.at.library.enums.UserEnum;
 import com.at.library.model.User;
+import com.at.library.service.rent.RentService;
 
 @Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userDao;
+	
+	@Autowired
+	private RentService rentService;
 
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -73,6 +78,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public void delete(Integer id) {
 		userDao.delete(id);
+	}
+
+	@Override
+	public List<RentDTO> getRents(Integer id) {
+		List<RentDTO> r = rentService.getByUserId(id);
+		return r;
 	}
 
 }

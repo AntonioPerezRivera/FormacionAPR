@@ -2,6 +2,7 @@ package com.at.library.service.user;
 
 import java.util.List;
 
+import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
 import com.at.library.model.User;
 
@@ -56,6 +57,19 @@ public interface UserService {
 	 */
 	void delete(Integer id);
 
+	/**
+	 * Permite recuperar el usuarioDTO del usuario con el identificador introducido
+	 * @param id
+	 * @return UserDTO
+	 */
+	
 	UserDTO getByIdDTO(Integer id);
+
+	/**
+	 * Permite recuperar el historial de alquileres dado un usuario concreto
+	 * @param id
+	 * @return List<RentDTO>
+	 */
+	List<RentDTO> getRents(Integer id);
 
 }

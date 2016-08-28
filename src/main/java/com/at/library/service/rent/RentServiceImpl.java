@@ -133,4 +133,16 @@ public class RentServiceImpl implements RentService {
 		rentDao.save(r);
 	}
 
+	@Override
+	public List<RentDTO> getByUserId(Integer id) {
+		final Iterator<Rent> iterator = rentDao.findUserId(id).iterator();
+		final List<RentDTO> res = new ArrayList<>();
+		
+		while (iterator.hasNext()) {
+			final Rent r = iterator.next();
+			res.add(transform(r));
+		}
+		return res;
+	}
+
 }

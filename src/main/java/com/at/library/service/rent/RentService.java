@@ -72,5 +72,11 @@ public interface RentService {
 	 */
 	void restore(Integer book_id);
 
+	/**
+	 * Permite devolver todos los alquileres cuyo usuario_id coincida con el introducido 
+	 * @param id
+	 * @return List<RentDTO>
+	 */
+	List<RentDTO> getByUserId(Integer id);
 
 }
