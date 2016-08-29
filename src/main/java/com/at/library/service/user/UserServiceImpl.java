@@ -188,7 +188,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address) throws UserNotFoundException {
-		List<UserDTO> b = transform(userDao.findByDniOrNameOrSurname1OrSurname2OrAddress(dni,name,surname1,surname2,address));
+		List<UserDTO> b = transform(userDao.findParams(dni,name,surname1,surname2,address));
 		if(b.isEmpty()){
 			throw new UserNotFoundException();
 		}

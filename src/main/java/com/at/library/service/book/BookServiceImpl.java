@@ -126,7 +126,7 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	public List<BookDTO> getByParams(String name, String isbn, String author) throws BookNotFoundException {
-		List<BookDTO> b = transform(bookDao.findByAuthorOrTitleOrIsbn(author, name, isbn));
+		List<BookDTO> b = transform(bookDao.findParams(author, name, isbn));
 		if(b.isEmpty())
 			throw new BookNotFoundException();
 		else
