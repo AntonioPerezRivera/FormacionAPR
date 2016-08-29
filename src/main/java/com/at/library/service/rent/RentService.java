@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.exception.UserNotFoundException;
 import com.at.library.model.Rent;
 
 public interface RentService {
@@ -35,9 +36,10 @@ public interface RentService {
 	 * Permite crear un nuevo alquiler
 	 * @param rent
 	 * @return RentDTO
+	 * @throws UserNotFoundException 
 	 */
 
-	RentDTO create(RentPostDTO rent);
+	RentDTO create(RentPostDTO rent) throws UserNotFoundException;
 	
 	/**
 	 * Devuelve, si existe, un alquiler cuyo id coincida con el parametro introducido

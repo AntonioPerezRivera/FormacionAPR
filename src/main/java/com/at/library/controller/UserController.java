@@ -45,13 +45,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
-	public void update(@PathVariable("id") Integer id, @RequestBody UserDTO user){
+	public void update(@PathVariable("id") Integer id, @RequestBody UserDTO user) throws InvalidDataException {
 		log.debug(String.format("Vamos a modificar el usuario %s", user));
 		userService.update(user);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
-	public void delete(@PathVariable("id") Integer id){
+	public void delete(@PathVariable("id") Integer id) throws UserNotFoundException{
 		log.debug(String.format("Vamos a modificar el usuario con id %s", id));
 		userService.delete(id);
 	}
@@ -61,14 +61,15 @@ public class UserController {
 							 @RequestParam(value="name",required=false) String name, 
 							 @RequestParam(value="surname1",required=false) String surname1,
 							 @RequestParam(value="surname2",required=false) String surname2,
-							 @RequestParam(value="address",required=false) String address){
+							 @RequestParam(value="address",required=false) String address)
+							 throws UserNotFoundException {
 		
 		log.debug(String.format("Recuperando usuario con dni: %s, nombre: %s, apellido 1: %s, apellido 2: %s, direccion: %s",dni,name,surname1,surname2,address));
 		return userService.getByParams(dni,name,surname1,surname2,address);
 	}
 	
 	@RequestMapping(value="/{id}/history", method={RequestMethod.GET})
-	public List<RentDTO> history(@PathVariable("id") Integer id){
+	public List<RentDTO> history(@PathVariable("id") Integer id) throws UserNotFoundException {
 		log.debug(String.format("Recuperando alquileres del usuario con id %s", id));
 		List<RentDTO> r = userService.getRents(id);
 		return r;

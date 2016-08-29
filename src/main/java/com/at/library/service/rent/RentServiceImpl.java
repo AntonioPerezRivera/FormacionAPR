@@ -15,6 +15,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exception.UserNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
 import com.at.library.model.Rent;
@@ -64,7 +65,7 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO create(RentPostDTO rentDto) {
+	public RentDTO create(RentPostDTO rentDto) throws UserNotFoundException {
 		
 		Book b = bookService.getById(rentDto.getIdLibro());
 		
