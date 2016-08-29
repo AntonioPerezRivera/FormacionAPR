@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.BookRentedException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
@@ -34,7 +35,7 @@ public class RentController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public RentDTO create(@RequestBody RentPostDTO rent) throws UserNotFoundException, BookNotFoundException, InvalidDataException {
+	public RentDTO create(@RequestBody RentPostDTO rent) throws UserNotFoundException, BookNotFoundException, InvalidDataException, BookRentedException {
 		log.debug(String.format("Vamos a crear el alquiler %s", rent));
 		return rentService.create(rent);
 	}
