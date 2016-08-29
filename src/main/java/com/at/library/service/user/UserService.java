@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
+import com.at.library.enums.UserEnum;
+import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
@@ -102,9 +104,21 @@ public interface UserService {
 	 */
 	List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address) throws UserNotFoundException;
 
-	void punish();
+	/**
+	 * Permite penalizar a los usuarios que se hayan retrasado en la devolucion de los libros
+	 * @throws UserNotFoundException
+	 */
+	void punish() throws UserNotFoundException;
 
+	/**
+	 * Permite levantar el castigo a los usuarios
+	 */
 	void forgive();
 
-
+	/**
+	 * Modifica el estado de un usuario concreto
+	 * @throws BookNotFoundException 
+	 */
+	void modifyStatus(User u, UserEnum s) throws UserNotFoundException;
+	
 }

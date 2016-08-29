@@ -198,5 +198,10 @@ public class RentServiceImpl implements RentService {
 			return res;
 		}
 	}
+
+	@Override
+	public List<Rent> findDelayed() {
+		return rentDao.delayed();
+	}
 	
 }

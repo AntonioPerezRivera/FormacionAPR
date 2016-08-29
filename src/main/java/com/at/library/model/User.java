@@ -59,6 +59,22 @@ public class User implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	public Date getPunishDate() {
+		return punishDate;
+	}
+
+	public void setPunishDate(Date punishDate) {
+		this.punishDate = punishDate;
+	}
+
+	public Date getForgiveDate() {
+		return forgiveDate;
+	}
+
+	public void setForgiveDate(Date forgiveDate) {
+		this.forgiveDate = forgiveDate;
+	}
 
 	public String getDni() {
 		return dni;
@@ -131,6 +147,14 @@ public class User implements Serializable {
 					    + this.getUserStatus() +" ";
 		
 		return output;
+	}
+
+	public UserEnum getStatus(){
+		return userStatus;
+	}
+	
+	public void setStatus(UserEnum s) {
+		this.userStatus = s;
 	}
 	
 }

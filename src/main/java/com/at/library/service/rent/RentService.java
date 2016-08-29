@@ -100,4 +100,10 @@ public interface RentService {
 	 */
 	List<RentDTO> getByBookId(Integer id) throws RentNotFoundException;
 
+	/**
+	 * Devuelve todos los alquileres retrasados
+	 * @return List<Rent>
+	 */
+	List<Rent> findDelayed();
+
 }

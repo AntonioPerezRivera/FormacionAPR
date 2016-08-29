@@ -1,8 +1,11 @@
 package com.at.library.service.user;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.dozer.DozerBeanMapper;
 import org.slf4j.Logger;
@@ -18,6 +21,7 @@ import com.at.library.enums.UserEnum;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
+import com.at.library.model.Rent;
 import com.at.library.model.User;
 import com.at.library.service.rent.RentService;
 
@@ -37,14 +41,46 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@Scheduled(cron = "15 0/1 * * * ?")
-	public void punish(){
+	public void punish() throws UserNotFoundException{
 		log.debug("Comienza el proceso de castigo de los usuarios");
+		final Iterable<Rent> delayedRents = rentService.findDelayed();
+		final Iterator<Rent> iterator = delayedRents.iterator();
+		while(iterator.hasNext()){
+			Date d = new Date();
+			Date endDate = iterator.next().getEndDate();
+			Long diffDays = TimeUnit.DAYS.convert(d.getTime() - endDate.getTime(),TimeUnit.MILLISECONDS);
+			final User u = iterator.next().getUser();
+			modifyStatus(u, UserEnum.NOT_ALLOWED);
+			u.setPunishDate(d);
+			if(u.getForgiveDate() == null){
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(d);
+				cal.add(Calendar.DATE, 3*diffDays.intValue());
+				d = cal.getTime();
+				u.setForgiveDate(d);
+			}
+			else{
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(u.getForgiveDate());
+				cal.add(Calendar.DATE, 3*diffDays.intValue());
+				d = cal.getTime();
+				u.setForgiveDate(d);
+			}
+		}
 	}
 	
 	@Override
 	@Scheduled(cron = "45 0/1 * * * ?")
 	public void forgive(){
 		log.debug("Comprobando sanciones de usuarios");
+		final Iterable<User> punishedUsers = userDao.findPunished();
+		final Iterator<User> iterator = punishedUsers.iterator();
+		while(iterator.hasNext()){
+			final User u = iterator.next();
+			u.setPunishDate(null);
+			u.setForgiveDate(null);
+			u.setStatus(UserEnum.ALLOWED);
+		}
 	}
 
 	@Override
@@ -160,4 +196,16 @@ public class UserServiceImpl implements UserService {
 			return b;
 		}
 	}
+
+	@Override
+	public void modifyStatus(User u, UserEnum s) throws UserNotFoundException {
+		if(u == null){
+			throw new UserNotFoundException();
+		}
+		else {
+			u.setStatus(s);
+			userDao.save(u);
+		}
+	}
+	
 }
