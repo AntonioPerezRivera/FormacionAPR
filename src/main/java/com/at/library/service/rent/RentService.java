@@ -5,6 +5,7 @@ import java.util.List;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.BookRentedException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
@@ -39,12 +40,13 @@ public interface RentService {
 	 * Permite crear un nuevo alquiler
 	 * @param rent
 	 * @return RentDTO
-	 * @throws UserNotFoundException 
-	 * @throws BookNotFoundException 
+	 * @throws UserNotFoundException
 	 * @throws InvalidDataException 
+	 * @throws BookRentedException 
+	 * @throws BookNotFoundException 
 	 */
 
-	RentDTO create(RentPostDTO rent) throws UserNotFoundException, BookNotFoundException, InvalidDataException;
+	RentDTO create(RentPostDTO rent) throws UserNotFoundException, InvalidDataException, BookRentedException, BookNotFoundException;
 	
 	/**
 	 * Devuelve, si existe, un alquiler cuyo id coincida con el parametro introducido

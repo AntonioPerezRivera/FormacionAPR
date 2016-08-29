@@ -16,6 +16,7 @@ import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.BookRentedException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
@@ -68,43 +69,49 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO create(RentPostDTO rentDto) throws UserNotFoundException, BookNotFoundException, InvalidDataException {
+	public RentDTO create(RentPostDTO rentDto) throws UserNotFoundException, 
+					BookRentedException, InvalidDataException, BookNotFoundException {
 		
 		if(rentDto == null){
 			throw new InvalidDataException();
 		}
 		else{
-		
+		   
 			Book b = bookService.getById(rentDto.getIdLibro());
-			
-			if(bookService.checkStatus(b) == true){
-				
-				User u = userService.getById(rentDto.getIdUser());
-				Employee e = employeeService.getById(rentDto.getIdEmployee());
-					
-				Rent rent = new Rent();
-				
-				rent.setBook(b);
-				rent.setUser(u);
-				rent.setEmployee(e);
-				
-				Date d = new Date();
-				rent.setInitDate(d);
-				
-				// Se le suman tres dias a la fecha actual
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(d);
-				cal.add(Calendar.DATE, 3);
-				d = cal.getTime();
-				
-				rent.setEndDate(d);
-				rent.setStatus(RentStatusEnum.ACTIVE);
-				rentDao.save(rent);
-				bookService.modifyStatus(b, StatusEnum.DISABLE);
-				return transform(rent);
+			if(b == null){
+				throw new BookNotFoundException();
 			}
 			else{
-				throw new BookNotFoundException();
+			
+				if(bookService.checkStatus(b) == true){
+					
+					User u = userService.getById(rentDto.getIdUser());
+					Employee e = employeeService.getById(rentDto.getIdEmployee());
+						
+					Rent rent = new Rent();
+					
+					rent.setBook(b);
+					rent.setUser(u);
+					rent.setEmployee(e);
+					
+					Date d = new Date();
+					rent.setInitDate(d);
+					
+					// Se le suman tres dias a la fecha actual
+					Calendar cal = Calendar.getInstance();
+					cal.setTime(d);
+					cal.add(Calendar.DATE, 3);
+					d = cal.getTime();
+					
+					rent.setEndDate(d);
+					rent.setStatus(RentStatusEnum.ACTIVE);
+					rentDao.save(rent);
+					bookService.modifyStatus(b, StatusEnum.DISABLE);
+					return transform(rent);
+				}
+				else{
+					throw new BookRentedException();
+				}
 			}
 		}
 	}
