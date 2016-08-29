@@ -41,6 +41,12 @@ public class User implements Serializable {
 
 	@Temporal(TemporalType.DATE)
 	private Date membershipDate = new Date();
+	
+	@Temporal(TemporalType.DATE)
+	private Date punishDate;
+	
+	@Temporal(TemporalType.DATE)
+	private Date forgiveDate;
 
 	@OneToMany(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_id")
