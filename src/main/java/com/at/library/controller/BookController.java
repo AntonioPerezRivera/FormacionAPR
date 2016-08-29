@@ -15,6 +15,7 @@ import com.at.library.dto.BookDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.service.book.BookService;
 
 @RestController
@@ -67,7 +68,7 @@ public class BookController {
 	}
 	
 	@RequestMapping(value="/{id}/history", method={RequestMethod.GET})
-	public List<RentDTO> history(@PathVariable("id") Integer id) throws BookNotFoundException {
+	public List<RentDTO> history(@PathVariable("id") Integer id) throws BookNotFoundException, RentNotFoundException {
 		log.debug(String.format("Recuperando alquileres del libro con id %s", id));
 		List<RentDTO> r = bookService.getRents(id);
 		return r;

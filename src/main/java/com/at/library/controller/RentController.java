@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.service.rent.RentService;
 
@@ -31,31 +34,31 @@ public class RentController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public RentDTO create(@RequestBody RentPostDTO rent) throws UserNotFoundException {
+	public RentDTO create(@RequestBody RentPostDTO rent) throws UserNotFoundException, BookNotFoundException, InvalidDataException {
 		log.debug(String.format("Vamos a crear el alquiler %s", rent));
 		return rentService.create(rent);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
-	public RentDTO get(@PathVariable("id") Integer id){
+	public RentDTO get(@PathVariable("id") Integer id) throws RentNotFoundException {
 		log.debug(String.format("Recuperando alquiler con id: %s",id));
 		return rentService.getByIdDTO(id);
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
-	public void update(@PathVariable("id") Integer id, @RequestBody RentDTO rent){
+	public void update(@PathVariable("id") Integer id, @RequestBody RentDTO rent) throws InvalidDataException, RentNotFoundException {
 		log.debug(String.format("Vamos a modificar el alquiler %s", rent));
 		rentService.update(rent);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
-	public void delete(@PathVariable("id") Integer id){
+	public void delete(@PathVariable("id") Integer id) throws RentNotFoundException {
 		log.debug(String.format("Vamos a modificar el alquiler con id %s", id));
 		rentService.delete(id);
 	}
 	
 	@RequestMapping(value="/restore/{book_id}", method={RequestMethod.PUT})
-	public void restore(@PathVariable("book_id") Integer book_id){
+	public void restore(@PathVariable("book_id") Integer book_id) throws BookNotFoundException{
 		log.debug(String.format("Vamos a proceder a realizar una devolucion en el alquiler con libro_id %s", book_id));
 		rentService.restore(book_id);
 	}

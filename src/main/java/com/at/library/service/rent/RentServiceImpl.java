@@ -15,6 +15,9 @@ import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
@@ -65,68 +68,93 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public RentDTO create(RentPostDTO rentDto) throws UserNotFoundException {
+	public RentDTO create(RentPostDTO rentDto) throws UserNotFoundException, BookNotFoundException, InvalidDataException {
 		
-		Book b = bookService.getById(rentDto.getIdLibro());
-		
-		if(bookService.checkStatus(b) == true){
-			
-			User u = userService.getById(rentDto.getIdUser());
-			Employee e = employeeService.getById(rentDto.getIdEmployee());
-				
-			Rent rent = new Rent();
-			
-			rent.setBook(b);
-			rent.setUser(u);
-			rent.setEmployee(e);
-			
-			Date d = new Date();
-			rent.setInitDate(d);
-			
-			// Se le suman tres dias a la fecha actual
-			Calendar cal = Calendar.getInstance();
-			cal.setTime(d);
-			cal.add(Calendar.DATE, 3);
-			d = cal.getTime();
-			
-			rent.setEndDate(d);
-			rent.setStatus(RentStatusEnum.ACTIVE);
-			rentDao.save(rent);
-			bookService.modifyStatus(b, StatusEnum.DISABLE);
-			return transform(rent);
+		if(rentDto == null){
+			throw new InvalidDataException();
 		}
-		
 		else{
-			//illo
-			return new RentDTO();
+		
+			Book b = bookService.getById(rentDto.getIdLibro());
+			
+			if(bookService.checkStatus(b) == true){
+				
+				User u = userService.getById(rentDto.getIdUser());
+				Employee e = employeeService.getById(rentDto.getIdEmployee());
+					
+				Rent rent = new Rent();
+				
+				rent.setBook(b);
+				rent.setUser(u);
+				rent.setEmployee(e);
+				
+				Date d = new Date();
+				rent.setInitDate(d);
+				
+				// Se le suman tres dias a la fecha actual
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(d);
+				cal.add(Calendar.DATE, 3);
+				d = cal.getTime();
+				
+				rent.setEndDate(d);
+				rent.setStatus(RentStatusEnum.ACTIVE);
+				rentDao.save(rent);
+				bookService.modifyStatus(b, StatusEnum.DISABLE);
+				return transform(rent);
+			}
+			else{
+				throw new BookNotFoundException();
+			}
 		}
 	}
 
 	@Override
-	public void update(RentDTO rent) {
-		Rent b = transform(rent);
-		rentDao.save(b);		
+	public void update(RentDTO rent) throws InvalidDataException {
+		if(rent == null){
+			throw new InvalidDataException();
+		}
+		else{
+			Rent b = transform(rent);
+			rentDao.save(b);
+		}
 	}
 	
 	@Override
-	public void delete(Integer id) {
-		rentDao.delete(id);
+	public void delete(Integer id) throws RentNotFoundException {
+		Rent r = rentDao.findOne(id);
+		if(r == null){
+			throw new RentNotFoundException();
+		}
+		else{
+			rentDao.delete(id);
+		}
 	}
 	
 	@Override
-	public Rent getById(Integer id) {
+	public Rent getById(Integer id) throws RentNotFoundException {
 		Rent b = rentDao.findOne(id);
-		return b;
+		if(b == null){
+			throw new RentNotFoundException();
+		}
+		else{
+			return b;
+		}
 	}
 	
 	@Override
-	public RentDTO getByIdDTO(Integer id){
+	public RentDTO getByIdDTO(Integer id) throws RentNotFoundException {
 		Rent b = rentDao.findOne(id);
-		return transform(b);
+		if(b == null){
+			throw new RentNotFoundException();
+		}
+		else{
+			return transform(b);
+		}
 	}
 
 	@Override
-	public void restore(Integer book_id) {
+	public void restore(Integer book_id) throws BookNotFoundException {
 		Book b = bookService.getById(book_id);
 		Rent r = rentDao.checkReturnNull(b.getId());
 		r.setStatus(RentStatusEnum.TERMINATED);
@@ -136,27 +164,39 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<RentDTO> getByUserId(Integer id) {
-		final Iterator<Rent> iterator = rentDao.findUserId(id).iterator();
-		final List<RentDTO> res = new ArrayList<>();
-		
-		while (iterator.hasNext()) {
-			final Rent r = iterator.next();
-			res.add(transform(r));
+	public List<RentDTO> getByUserId(Integer id) throws RentNotFoundException {
+		List<Rent> r = rentDao.findBookId(id);
+		if(r.isEmpty()){
+			throw new RentNotFoundException();
 		}
-		return res;
+		else{
+			final Iterator<Rent> iterator = r.iterator();
+			final List<RentDTO> res = new ArrayList<>();
+			
+			while (iterator.hasNext()) {
+				final Rent r2 = iterator.next();
+				res.add(transform(r2));
+			}
+			return res;
+		}
 	}
 
 	@Override
-	public List<RentDTO> getByBookId(Integer id) {
-		final Iterator<Rent> iterator = rentDao.findBookId(id).iterator();
-		final List<RentDTO> res = new ArrayList<>();
-		
-		while (iterator.hasNext()) {
-			final Rent r = iterator.next();
-			res.add(transform(r));
+	public List<RentDTO> getByBookId(Integer id) throws RentNotFoundException {
+		List<Rent> r = rentDao.findBookId(id);
+		if(r.isEmpty()){
+			throw new RentNotFoundException();
 		}
-		return res;
+		else{
+			final Iterator<Rent> iterator = r.iterator();
+			final List<RentDTO> res = new ArrayList<>();
+			
+			while (iterator.hasNext()) {
+				final Rent r2 = iterator.next();
+				res.add(transform(r2));
+			}
+			return res;
+		}
 	}
 	
 }

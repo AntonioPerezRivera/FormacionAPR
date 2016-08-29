@@ -16,6 +16,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.service.rent.RentService;
 
@@ -152,7 +153,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<RentDTO> getRents(Integer id) throws BookNotFoundException {
+	public List<RentDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException {
 		Book b = bookDao.findOne(id);
 		if(b == null){
 			throw new BookNotFoundException();

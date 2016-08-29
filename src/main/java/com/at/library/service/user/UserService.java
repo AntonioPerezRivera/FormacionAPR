@@ -5,6 +5,7 @@ import java.util.List;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
 import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.model.User;
 
@@ -85,8 +86,9 @@ public interface UserService {
 	 * @param id
 	 * @return List<RentDTO>
 	 * @throws UserNotFoundException 
+	 * @throws RentNotFoundException 
 	 */
-	List<RentDTO> getRents(Integer id) throws UserNotFoundException;
+	List<RentDTO> getRents(Integer id) throws UserNotFoundException, RentNotFoundException;
 
 	/**
 	 * Permite la busqueda de un usuario concreto

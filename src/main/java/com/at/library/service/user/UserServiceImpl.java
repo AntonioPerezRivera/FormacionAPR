@@ -16,6 +16,7 @@ import com.at.library.dto.UserDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.enums.UserEnum;
 import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.model.User;
 import com.at.library.service.rent.RentService;
@@ -138,7 +139,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<RentDTO> getRents(Integer id) throws UserNotFoundException {
+	public List<RentDTO> getRents(Integer id) throws UserNotFoundException, RentNotFoundException {
 		User u = userDao.findOne(id);
 		if(u == null){
 			throw new UserNotFoundException();

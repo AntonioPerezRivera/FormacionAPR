@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
 import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.service.user.UserService;
 
@@ -69,7 +70,7 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="/{id}/history", method={RequestMethod.GET})
-	public List<RentDTO> history(@PathVariable("id") Integer id) throws UserNotFoundException {
+	public List<RentDTO> history(@PathVariable("id") Integer id) throws UserNotFoundException, RentNotFoundException {
 		log.debug(String.format("Recuperando alquileres del usuario con id %s", id));
 		List<RentDTO> r = userService.getRents(id);
 		return r;

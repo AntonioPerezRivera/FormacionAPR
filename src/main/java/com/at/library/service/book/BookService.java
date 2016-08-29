@@ -7,6 +7,7 @@ import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.RentNotFoundException;
 import com.at.library.model.Book;
 
 public interface BookService {
@@ -108,6 +109,7 @@ public interface BookService {
 	 * @param id
 	 * @return List<RentDTO>
 	 * @throws BookNotFoundException 
+	 * @throws RentNotFoundException 
 	 */
-	List<RentDTO> getRents(Integer id) throws BookNotFoundException;
+	List<RentDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException;
 }
