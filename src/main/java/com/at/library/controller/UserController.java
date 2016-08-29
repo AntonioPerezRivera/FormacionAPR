@@ -45,7 +45,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
-	public void update(@PathVariable("id") Integer id, @RequestBody UserDTO user) throws InvalidDataException {
+	public void update(@PathVariable("id") Integer id, @RequestBody UserDTO user) throws InvalidDataException,UserNotFoundException {
 		log.debug(String.format("Vamos a modificar el usuario %s", user));
 		userService.update(user);
 	}

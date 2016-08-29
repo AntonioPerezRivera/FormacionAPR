@@ -14,6 +14,8 @@ import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
+import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.InvalidDataException;
 import com.at.library.model.Book;
 import com.at.library.service.rent.RentService;
 
@@ -66,45 +68,79 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public BookDTO create(BookDTO book) {
-		Book b = transform(book);
-		b.setStartDate(new Date());
-		return transform(bookDao.save(b));
+	public BookDTO create(BookDTO book) throws InvalidDataException {
+		if(book == null){
+			throw new InvalidDataException();
+		}
+		else{
+			Book b = transform(book);
+			b.setStartDate(new Date());
+			return transform(bookDao.save(b));
+		}
 	}
 
 	@Override
-	public Book getById(Integer id) {
+	public Book getById(Integer id) throws BookNotFoundException {
 		Book b = bookDao.findOne(id);
-		return b;
+		if(b == null){
+			throw new BookNotFoundException();
+		}
+		else {
+			return b;
+		}
 	}
 	
 	@Override
-	public BookDTO getByIdDTO(Integer id){
+	public BookDTO getByIdDTO(Integer id) throws BookNotFoundException {
 		Book b = bookDao.findOne(id);
-		return transform(b);
+		if(b == null){
+			throw new BookNotFoundException();
+		}
+		else {
+			return transform(b);
+		}
 	}
 
 	@Override
-	public void update(BookDTO book) {
-		Book b = transform(book);
-		bookDao.save(b);		
+	public void update(BookDTO book) throws InvalidDataException {
+		if(book == null){
+			throw new InvalidDataException();
+		}
+		else{
+			Book b = transform(book);
+			bookDao.save(b);
+		}
 	}
 
 	@Override
-	public void delete(Integer id) {
-		bookDao.delete(id);
+	public void delete(Integer id) throws BookNotFoundException {
+		Book b = bookDao.findOne(id);
+		if(b == null){
+			throw new BookNotFoundException();
+		}
+		else{
+			bookDao.delete(id);
+		}
 	}
 
 	@Override
-	public List<BookDTO> getByParams(String name, String isbn, String author) {
+	public List<BookDTO> getByParams(String name, String isbn, String author) throws BookNotFoundException {
 		List<BookDTO> b = transform(bookDao.findByAuthorOrTitleOrIsbn(author, name, isbn));
-		return b;
+		if(b.isEmpty())
+			throw new BookNotFoundException();
+		else
+			return b;
 	}
 
 	@Override
-	public void modifyStatus(Book b, StatusEnum s) {
-		b.setStatus(s);
-		bookDao.save(b);
+	public void modifyStatus(Book b, StatusEnum s) throws BookNotFoundException {
+		if(b == null){
+			throw new BookNotFoundException();
+		}
+		else {
+			b.setStatus(s);
+			bookDao.save(b);
+		}
 	}
 	
 	@Override
@@ -116,8 +152,14 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<RentDTO> getRents(Integer id) {
-		List<RentDTO> r = rentService.getByBookId(id);
-		return r;
+	public List<RentDTO> getRents(Integer id) throws BookNotFoundException {
+		Book b = bookDao.findOne(id);
+		if(b == null){
+			throw new BookNotFoundException();
+		}
+		else{
+			List<RentDTO> r = rentService.getByBookId(id);
+			return r;
+		}
 	}
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.exception.UserNotFoundException;
 import com.at.library.service.rent.RentService;
 
 @RestController // !
@@ -30,7 +31,7 @@ public class RentController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public RentDTO create(@RequestBody RentPostDTO rent){
+	public RentDTO create(@RequestBody RentPostDTO rent) throws UserNotFoundException {
 		log.debug(String.format("Vamos a crear el alquiler %s", rent));
 		return rentService.create(rent);
 	}
