@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
+import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.UserNotFoundException;
 import com.at.library.service.user.UserService;
 
 @RestController
@@ -31,13 +33,13 @@ public class UserController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public UserDTO create(@RequestBody UserDTO user){
+	public UserDTO create(@RequestBody UserDTO user) throws InvalidDataException {
 		log.debug(String.format("Vamos a crear el usuario %s", user));
 		return userService.create(user);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
-	public UserDTO get(@PathVariable("id") Integer id){
+	public UserDTO get(@PathVariable("id") Integer id) throws UserNotFoundException {
 		log.debug(String.format("Recuperando usuario con id: %s",id));
 		return userService.getByIdDTO(id);
 	}
