@@ -20,7 +20,7 @@ import com.at.library.exception.UserNotFoundException;
 import com.at.library.service.rent.RentService;
 
 @RestController // !
-@RequestMapping(value = "/book/{idLibro}/rent")
+@RequestMapping(value = "/rent")
 public class RentController {
 
 	@Autowired
