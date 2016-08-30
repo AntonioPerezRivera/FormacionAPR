@@ -3,6 +3,9 @@ package com.at.library.service.zone;
 import java.util.List;
 
 import com.at.library.dto.ZoneDTO;
+import com.at.library.dto.ZonePostDTO;
+import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.model.Zone;
 
 public interface ZoneService {
@@ -30,13 +33,13 @@ public interface ZoneService {
 	 */
 	Zone transform(ZoneDTO zone);
 
-	ZoneDTO create(ZoneDTO zone);
-
 	ZoneDTO getById(Integer id);
 
 	void update(ZoneDTO zone);
 
 	void delete(Integer id);
+
+	ZoneDTO create(ZonePostDTO zone) throws BookNotFoundException, ZoneNotFoundException;
 
 }
 

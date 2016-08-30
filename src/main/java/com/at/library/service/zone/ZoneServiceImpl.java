@@ -10,7 +10,12 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.ZoneDao;
 import com.at.library.dto.ZoneDTO;
+import com.at.library.dto.ZonePostDTO;
+import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.ZoneNotFoundException;
+import com.at.library.model.Book;
 import com.at.library.model.Zone;
+import com.at.library.service.book.BookService;
 
 @Service
 public class ZoneServiceImpl implements ZoneService {
@@ -18,6 +23,9 @@ public class ZoneServiceImpl implements ZoneService {
 	@Autowired
 	private ZoneDao zoneDao;
 
+	@Autowired
+	private BookService bookService;
+	
 	@Autowired
 	private DozerBeanMapper dozer;
 
@@ -46,9 +54,25 @@ public class ZoneServiceImpl implements ZoneService {
 	
 
 	@Override
-	public ZoneDTO create(ZoneDTO zone) {
-		Zone z = transform(zone);
-		return transform(zoneDao.save(z));
+	public ZoneDTO create(ZonePostDTO zone) throws BookNotFoundException, ZoneNotFoundException {
+
+		if(zone == null){
+			throw new ZoneNotFoundException();
+		}
+		else{
+			Zone z = new Zone();
+			List<Integer> idLibros = zone.getIdLibros();
+			List<Book> listLibros = new ArrayList<>();
+			final Iterator<Integer> iterator = idLibros.iterator();
+			while(iterator.hasNext()){
+				Integer i = iterator.next();
+				Book b = bookService.getById(i);
+				listLibros.add(b);
+			}
+			z.setBooks(listLibros);
+			z.setName(zone.getNameRoom());
+			return transform(z);
+		}
 	}
 
 	@Override

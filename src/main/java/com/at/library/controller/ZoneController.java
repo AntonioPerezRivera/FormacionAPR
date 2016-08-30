@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.ZoneDTO;
+import com.at.library.dto.ZonePostDTO;
+import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.service.zone.ZoneService;
 
 @RestController
@@ -29,9 +32,9 @@ public class ZoneController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public ZoneDTO create(@RequestBody ZoneDTO zone){
-		log.debug(String.format("Vamos a crear la zona %s", zone));
-		return zoneService.create(zone);
+	public ZoneDTO create(@RequestBody ZonePostDTO rent) throws BookNotFoundException, ZoneNotFoundException {
+		log.debug(String.format("Vamos a crear la zona %s", rent));
+		return zoneService.create(rent);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
