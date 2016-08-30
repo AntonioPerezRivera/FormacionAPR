@@ -1,16 +1,13 @@
 package com.at.library.service.user;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.dozer.DozerBeanMapper;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
-import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -21,6 +18,7 @@ import com.at.library.controller.RentController;
 import com.at.library.dao.UserDao;
 import com.at.library.dto.UserDTO;
 import com.at.library.dto.RentDTO;
+import com.at.library.enums.RentPunishEnum;
 import com.at.library.enums.UserEnum;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
@@ -46,10 +44,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Scheduled(cron = "15 0/1 * * * ?")
 	@Transactional
-	// Lo va a castigar 20mil veces, cada vez q se ejecute
-	// EL usuario no se guarda (?)
-	// Haz q te devuelva el numero de alquileres retrasados q tiene el usuario para actuar en consecuencia
-	public void punish() throws UserNotFoundException{
+	public void punish() throws UserNotFoundException, RentNotFoundException{
 		
 		log.debug("Comienza el proceso de castigo de los usuarios");
 		final Iterable<Rent> delayedRents = rentService.findDelayed();
@@ -59,6 +54,7 @@ public class UserServiceImpl implements UserService {
 			
 			Date d = new Date();
 			Rent r = iterator.next();
+			rentService.modifyStatus(r, RentPunishEnum.PUNISHED);
 			Date endDate = r.getEndDate();
 			DateTime d1 = new DateTime(d);
 			DateTime d2 = new DateTime(endDate);
@@ -68,12 +64,11 @@ public class UserServiceImpl implements UserService {
 			modifyStatus(u, UserEnum.NOT_ALLOWED);
 			u.setPunishDate(d);
 			
-			if(u.getForgiveDate() == null){
-				DateTime dateTime = new DateTime(d);
-				u.setForgiveDate(dateTime.plusDays(3*diffDays).toDate());
-			}
+			DateTime dateTime = new DateTime(d);
+			u.setForgiveDate(dateTime.plusDays(3*diffDays).toDate());
 		}
 	}
+
 	
 	@Override
 	@Scheduled(cron = "45 0/1 * * * ?")

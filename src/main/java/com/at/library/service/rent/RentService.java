@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.enums.RentPunishEnum;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.BookRentedException;
 import com.at.library.exception.InvalidDataException;
@@ -107,5 +108,13 @@ public interface RentService {
 	 * @return List<Rent>
 	 */
 	List<Rent> findDelayed();
+
+	/**
+	 * Metodo encargado de modificar el estado del alquiler
+	 * @param u
+	 * @param s
+	 * @throws RentNotFoundException
+	 */
+	void modifyStatus(Rent u, RentPunishEnum s) throws RentNotFoundException;
 
 }

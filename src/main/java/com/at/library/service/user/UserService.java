@@ -107,8 +107,9 @@ public interface UserService {
 	/**
 	 * Permite penalizar a los usuarios que se hayan retrasado en la devolucion de los libros
 	 * @throws UserNotFoundException
+	 * @throws RentNotFoundException 
 	 */
-	void punish() throws UserNotFoundException;
+	void punish() throws UserNotFoundException, RentNotFoundException;
 
 	/**
 	 * Permite levantar el castigo a los usuarios

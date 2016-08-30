@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.at.library.dao.RentDao;
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
+import com.at.library.enums.RentPunishEnum;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exception.BookNotFoundException;
@@ -208,6 +209,17 @@ public class RentServiceImpl implements RentService {
 	@Override
 	public List<Rent> findDelayed() {
 		return rentDao.delayed();
+	}
+	
+	@Override
+	public void modifyStatus(Rent u, RentPunishEnum s) throws RentNotFoundException {
+		if(u == null){
+			throw new RentNotFoundException();
+		}
+		else {
+			u.setStatusPunish(s);
+			rentDao.save(u);
+		}
 	}
 	
 }

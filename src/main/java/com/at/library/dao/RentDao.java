@@ -20,7 +20,7 @@ public interface RentDao extends CrudRepository<Rent, Integer> {
 	@Query(value="SELECT r from Rent as r where r.rentPK.book.id = ?1")
 	public List<Rent> findBookId(Integer id);
 
-	@Query(value="SELECT r from Rent as r where r.endDate < CURRENT_DATE")
+	@Query(value="SELECT r from Rent as r where r.endDate < CURRENT_DATE and r.statusPunish = com.at.library.enums.RentPunishEnum.NOT_PUNISHED")
 	public List<Rent> delayed();
 	
 }

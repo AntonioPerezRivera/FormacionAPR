@@ -13,6 +13,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import com.at.library.enums.RentPunishEnum;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.pk.RentPK;
 
@@ -36,6 +37,9 @@ public class Rent implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private RentStatusEnum status;
 	
+	@Enumerated(EnumType.STRING)
+	private RentPunishEnum statusPunish; 
+	
 	// Almacena la fecha en la que el usuario lo devuelve
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date returnDate;
@@ -46,6 +50,14 @@ public class Rent implements Serializable {
 
 	public void setPk(RentPK rentPK) {
 		this.rentPK = rentPK;
+	}
+
+	public RentPunishEnum getStatusPunish() {
+		return statusPunish;
+	}
+
+	public void setStatusPunish(RentPunishEnum statusPunish) {
+		this.statusPunish = statusPunish;
 	}
 
 	public User getUser() {
