@@ -1,12 +1,12 @@
 package com.at.library.service.rent;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
 import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -98,10 +98,9 @@ public class RentServiceImpl implements RentService {
 					rent.setInitDate(d);
 					
 					// Se le suman tres dias a la fecha actual
-					Calendar cal = Calendar.getInstance();
-					cal.setTime(d);
-					cal.add(Calendar.DATE, 3);
-					d = cal.getTime();
+					
+					DateTime dateTime = new DateTime(d);
+					rent.setEndDate(dateTime.plusDays(3).toDate());
 					
 					rent.setEndDate(d);
 					rent.setStatus(RentStatusEnum.ACTIVE);
