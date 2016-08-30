@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import org.dozer.DozerBeanMapper;
+import org.joda.time.DateTime;
+import org.joda.time.Days;
+import org.joda.time.Period;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -47,31 +50,27 @@ public class UserServiceImpl implements UserService {
 	// EL usuario no se guarda (?)
 	// Haz q te devuelva el numero de alquileres retrasados q tiene el usuario para actuar en consecuencia
 	public void punish() throws UserNotFoundException{
+		
 		log.debug("Comienza el proceso de castigo de los usuarios");
 		final Iterable<Rent> delayedRents = rentService.findDelayed();
-		log.debug(delayedRents.toString());
 		final Iterator<Rent> iterator = delayedRents.iterator();
+		
 		while(iterator.hasNext()){
+			
 			Date d = new Date();
 			Rent r = iterator.next();
 			Date endDate = r.getEndDate();
-			Long diffDays = TimeUnit.DAYS.convert(d.getTime() - endDate.getTime(),TimeUnit.MILLISECONDS);
+			DateTime d1 = new DateTime(d);
+			DateTime d2 = new DateTime(endDate);
+			Integer diffDays = Days.daysBetween(d1, d2).getDays();
+			
 			final User u = r.getUser();
 			modifyStatus(u, UserEnum.NOT_ALLOWED);
 			u.setPunishDate(d);
+			
 			if(u.getForgiveDate() == null){
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(d);
-				cal.add(Calendar.DATE, 3*diffDays.intValue());
-				d = cal.getTime();
-				u.setForgiveDate(d);
-			}
-			else{
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(u.getForgiveDate());
-				cal.add(Calendar.DATE, 3*diffDays.intValue());
-				d = cal.getTime();
-				u.setForgiveDate(d);
+				DateTime dateTime = new DateTime(d);
+				u.setForgiveDate(dateTime.plusDays(3*diffDays).toDate());
 			}
 		}
 	}
