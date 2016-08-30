@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.at.library.controller.RentController;
 import com.at.library.dao.UserDao;
@@ -41,15 +42,21 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	@Scheduled(cron = "15 0/1 * * * ?")
+	@Transactional
+	// Lo va a castigar 20mil veces, cada vez q se ejecute
+	// EL usuario no se guarda (?)
+	// Haz q te devuelva el numero de alquileres retrasados q tiene el usuario para actuar en consecuencia
 	public void punish() throws UserNotFoundException{
 		log.debug("Comienza el proceso de castigo de los usuarios");
 		final Iterable<Rent> delayedRents = rentService.findDelayed();
+		log.debug(delayedRents.toString());
 		final Iterator<Rent> iterator = delayedRents.iterator();
 		while(iterator.hasNext()){
 			Date d = new Date();
-			Date endDate = iterator.next().getEndDate();
+			Rent r = iterator.next();
+			Date endDate = r.getEndDate();
 			Long diffDays = TimeUnit.DAYS.convert(d.getTime() - endDate.getTime(),TimeUnit.MILLISECONDS);
-			final User u = iterator.next().getUser();
+			final User u = r.getUser();
 			modifyStatus(u, UserEnum.NOT_ALLOWED);
 			u.setPunishDate(d);
 			if(u.getForgiveDate() == null){
@@ -125,6 +132,7 @@ public class UserServiceImpl implements UserService {
 		}
 		else{
 			User u = transform(user);
+			u.setMembershipDate(new Date());
 			u.setUserStatus(UserEnum.ALLOWED);
 			return transform(userDao.save(u));
 		}

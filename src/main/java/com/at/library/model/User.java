@@ -40,7 +40,7 @@ public class User implements Serializable {
 	private UserEnum userStatus;
 
 	@Temporal(TemporalType.DATE)
-	private Date membershipDate = new Date();
+	private Date membershipDate;
 	
 	@Temporal(TemporalType.DATE)
 	private Date punishDate;
