@@ -38,4 +38,6 @@ public interface RoomService {
 
 	void delete(Integer id);
 
+	Room getByName(String nameRoom);
+
 }

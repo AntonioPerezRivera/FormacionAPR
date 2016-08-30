@@ -54,5 +54,4 @@ public class ZoneController {
 		log.debug(String.format("Vamos a modificar la zona con id %s", id));
 		zoneService.delete(id);
 	}
-
 }

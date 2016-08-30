@@ -16,6 +16,7 @@ import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Zone;
 import com.at.library.service.book.BookService;
+import com.at.library.service.room.RoomService;
 
 @Service
 public class ZoneServiceImpl implements ZoneService {
@@ -25,6 +26,9 @@ public class ZoneServiceImpl implements ZoneService {
 
 	@Autowired
 	private BookService bookService;
+	
+	@Autowired
+	private RoomService roomService;
 	
 	@Autowired
 	private DozerBeanMapper dozer;
@@ -70,7 +74,8 @@ public class ZoneServiceImpl implements ZoneService {
 				listLibros.add(b);
 			}
 			z.setBooks(listLibros);
-			z.setName(zone.getNameRoom());
+			z.setRoom(roomService.getByName(zone.getNameRoom()));
+			z.setName(zone.getNameRoom()+"Z");
 			return transform(z);
 		}
 	}

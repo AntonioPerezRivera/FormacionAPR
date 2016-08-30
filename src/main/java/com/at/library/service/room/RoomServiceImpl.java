@@ -67,4 +67,9 @@ public class RoomServiceImpl implements RoomService {
 		roomDao.delete(id);
 	}
 
+	@Override
+	public Room getByName(String nameRoom) {
+		return roomDao.getByName(nameRoom);
+	}
+
 }

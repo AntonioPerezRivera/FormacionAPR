@@ -3,12 +3,10 @@ package com.at.library.dto;
 import java.io.Serializable;
 import java.util.List;
 
-public class ZonePostDTO implements Serializable {
+public class RoomPostDTO implements Serializable {
 
-	private static final long serialVersionUID = 7107100081685015200L;
 	private List<Integer> idLibros;
 	private String nameRoom;
-	private String nameZone;
 	
 	public List<Integer> getIdLibros() {
 		return idLibros;
