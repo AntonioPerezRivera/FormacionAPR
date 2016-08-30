@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 	private DozerBeanMapper dozer;
 	
 	@Override
-	@Scheduled(cron = "15 0/1 * * * ?")
+	@Scheduled(cron = "0 0 2 1/1 * ?")
 	@Transactional
 	public void punish() throws UserNotFoundException, RentNotFoundException{
 		
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
 
 	
 	@Override
-	@Scheduled(cron = "45 0/1 * * * ?")
+	@Scheduled(cron = "0 0 4 1/1 * ?")
 	public void forgive(){
 		log.debug("Comprobando sanciones de usuarios");
 		final Iterable<User> punishedUsers = userDao.findPunished();
