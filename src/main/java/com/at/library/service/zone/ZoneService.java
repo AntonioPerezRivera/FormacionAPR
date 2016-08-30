@@ -41,5 +41,7 @@ public interface ZoneService {
 
 	ZoneDTO create(ZonePostDTO zone) throws BookNotFoundException, ZoneNotFoundException;
 
+	Zone getByName(String name);
+
 }
 

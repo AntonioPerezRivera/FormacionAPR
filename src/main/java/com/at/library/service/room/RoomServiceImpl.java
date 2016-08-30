@@ -10,7 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RoomDao;
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPostDTO;
+import com.at.library.exception.RoomNotFoundException;
 import com.at.library.model.Room;
+import com.at.library.model.Zone;
+import com.at.library.service.zone.ZoneService;
 
 @Service
 public class RoomServiceImpl implements RoomService {
@@ -20,6 +24,9 @@ public class RoomServiceImpl implements RoomService {
 
 	@Autowired
 	private DozerBeanMapper dozer;
+	
+	@Autowired
+	private ZoneService zoneService;
 
 	@Override
 	public List<RoomDTO> findAll() {
@@ -45,10 +52,26 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public RoomDTO create(RoomDTO room) {
-		Room r = transform(room);
-		return transform(roomDao.save(r));
+	public RoomDTO create(RoomPostDTO room) throws RoomNotFoundException {
+		if(room == null){
+			throw new RoomNotFoundException();
+		}
+		else{
+			Room r = new Room();
+			List<String> idZonas = room.getNameZonas();
+			List<Zone> listZonas = new ArrayList<>();
+			final Iterator<String> iterator = idZonas.iterator();
+			while(iterator.hasNext()){
+				String name = iterator.next();
+				Zone zona = zoneService.getByName(name);
+				listZonas.add(zona);
+			}
+			r.setZones(listZonas);
+			r.setName(room.getNameRoom());
+			return transform(r);
+		}
 	}
+
 
 	@Override
 	public RoomDTO getById(Integer id) {

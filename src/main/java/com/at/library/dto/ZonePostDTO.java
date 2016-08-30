@@ -10,6 +10,12 @@ public class ZonePostDTO implements Serializable {
 	private String nameRoom;
 	private String nameZone;
 	
+	public String getNameZone() {
+		return nameZone;
+	}
+	public void setNameZone(String nameZone) {
+		this.nameZone = nameZone;
+	}
 	public List<Integer> getIdLibros() {
 		return idLibros;
 	}

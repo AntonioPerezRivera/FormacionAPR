@@ -75,7 +75,7 @@ public class ZoneServiceImpl implements ZoneService {
 			}
 			z.setBooks(listLibros);
 			z.setRoom(roomService.getByName(zone.getNameRoom()));
-			z.setName(zone.getNameRoom()+"Z");
+			z.setName(zone.getNameRoom()+zone.getNameZone());
 			return transform(z);
 		}
 	}
@@ -95,6 +95,11 @@ public class ZoneServiceImpl implements ZoneService {
 	@Override
 	public void delete(Integer id) {
 		zoneDao.delete(id);
+	}
+
+	@Override
+	public Zone getByName(String name) {
+		return zoneDao.getByName(name);
 	}
 
 }

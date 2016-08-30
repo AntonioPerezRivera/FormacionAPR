@@ -5,14 +5,15 @@ import java.util.List;
 
 public class RoomPostDTO implements Serializable {
 
-	private List<Integer> idLibros;
+	private static final long serialVersionUID = 7875688704695128845L;
+	private List<String> nameZonas;
 	private String nameRoom;
 	
-	public List<Integer> getIdLibros() {
-		return idLibros;
+	public List<String> getNameZonas() {
+		return nameZonas;
 	}
-	public void setIdLibros(List<Integer> idLibros) {
-		this.idLibros = idLibros;
+	public void setNameZonas(List<String> nameZonas) {
+		this.nameZonas = nameZonas;
 	}
 	public String getNameRoom() {
 		return nameRoom;
@@ -22,6 +23,6 @@ public class RoomPostDTO implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return "ZonePostDTO [idLibros=" + idLibros + ", nameRoom=" + nameRoom + "]";
+		return "RoomPostDTO [nameZonas=" + nameZonas + ", nameRoom=" + nameRoom + "]";
 	}
 }

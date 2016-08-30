@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RoomDTO;
+import com.at.library.dto.RoomPostDTO;
+import com.at.library.exception.RoomNotFoundException;
 import com.at.library.service.room.RoomService;
 
 @RestController
@@ -29,7 +31,7 @@ public class RoomController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public RoomDTO create(@RequestBody RoomDTO room){
+	public RoomDTO create(@RequestBody RoomPostDTO room) throws RoomNotFoundException{
 		log.debug(String.format("Vamos a crear la habitacion %s", room));
 		return roomService.create(room);
 	}
