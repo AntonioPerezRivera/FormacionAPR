@@ -25,12 +25,15 @@ public class BookCustomServiceImpl implements BookCustomService {
 	@Autowired
 	private BookService bookService;
 	
+
+	private static RestTemplate restTemplate = new RestTemplate();
+	
 	@Override
 	public void findAll(String url) {
-		RestTemplate restTemplate = new RestTemplate();
 		List<Rent> rents = new ArrayList<>();
 		boolean isFinished = false;
 		Integer page = 0;
+		
 		do {
 			ResponseEntity<List<Rent>> rentResponse =
 			        restTemplate.exchange(url+"?page="+page+"&size=20",HttpMethod.GET, null, new ParameterizedTypeReference<List<Rent>>() {});
@@ -43,17 +46,15 @@ public class BookCustomServiceImpl implements BookCustomService {
 			}
 		} while(!isFinished);
 		
+		
 		final Iterator<Rent> iterator = rents.iterator();
+		
 		while (iterator.hasNext()) {
-			boolean thrown = false;
 			final Rent r = iterator.next();
 			Book b = r.getBook();
 			try{
 				bookService.getById(b.getId());
 			} catch(BookNotFoundException be) {
-				thrown = true;
-			}
-			if(thrown){
 				BookDTO bDTO = bookService.transform(b);
 				try{
 					bookService.create(bDTO);
