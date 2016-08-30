@@ -59,7 +59,8 @@ public class UserServiceImpl implements UserService {
 			DateTime d1 = new DateTime(d);
 			DateTime d2 = new DateTime(endDate);
 			Integer diffDays = Days.daysBetween(d1, d2).getDays();
-			
+			if(diffDays == 0)
+				diffDays = 1;
 			final User u = r.getUser();
 			modifyStatus(u, UserEnum.NOT_ALLOWED);
 			u.setPunishDate(d);

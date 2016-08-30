@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.at.library.dto.ApiErrorDTO;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.InvalidDataException;
+import com.at.library.exception.UserNotFoundException;
 
 @ControllerAdvice(basePackages= {"com.at.library.controller"})
 public class ControllerFails {
@@ -21,11 +22,17 @@ public class ControllerFails {
 	}
 	
 	@ResponseBody
-	@ExceptionHandler(InvalidDataException.class)
+	@ExceptionHandler(BookNotFoundException.class)
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	public ApiErrorDTO error(BookNotFoundException e){
 		return new ApiErrorDTO(404,e.getMessage());
 	}
 	
+	@ResponseBody
+	@ExceptionHandler(UserNotFoundException.class)
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	public ApiErrorDTO error(UserNotFoundException e){
+		return new ApiErrorDTO(404,e.getMessage());
+	}
 	
 }
