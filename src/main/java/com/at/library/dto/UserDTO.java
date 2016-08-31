@@ -8,7 +8,7 @@ public class UserDTO implements Serializable {
 
 	private static final long serialVersionUID = 3827455324138571715L;
 
-	// id
+	private Integer id;
 	
 	private String dni;
 
@@ -21,6 +21,14 @@ public class UserDTO implements Serializable {
 	private String address;
 
 	private UserEnum userStatus;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getDni() {
 		return dni;
@@ -72,7 +80,7 @@ public class UserDTO implements Serializable {
 
 	@Override
 	public String toString() {
-		return "UserDTO [dni=" + dni + ", name=" + name + ", surname1=" + surname1 + ", surname2="
+		return "UserDTO [id=" + id + ", dni=" + dni + ", name=" + name + ", surname1=" + surname1 + ", surname2="
 				+ surname2 + ", address=" + address + ", userStatus=" + userStatus + "]";
 	}
 	

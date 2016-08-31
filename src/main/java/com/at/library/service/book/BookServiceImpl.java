@@ -9,6 +9,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
@@ -19,6 +20,8 @@ import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.service.rent.RentService;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -32,6 +35,9 @@ public class BookServiceImpl implements BookService {
 	@Autowired
 	private RentService rentService;
 
+	private static RestTemplate restTemplate = new RestTemplate();
+	private static final String GBOOKS_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<BookDTO> findAll() {
@@ -98,8 +104,27 @@ public class BookServiceImpl implements BookService {
 			throw new BookNotFoundException();
 		}
 		else {
-			return transform(b);
+			BookDTO bDTO = transform(b);
+			getGoogleApiInfo(bDTO);
+			return bDTO;
 		}
+	}
+	
+	public void getGoogleApiInfo(BookDTO bDTO){
+
+		ObjectNode objectNode = restTemplate.getForObject(GBOOKS_URL+bDTO.getTitle(), ObjectNode.class);
+		JsonNode pDate = objectNode.get("items").get(0).get("volumeInfo").get("publishedDate");
+		JsonNode descr = objectNode.get("items").get(0).get("volumeInfo").get("description");
+		JsonNode imgLink = objectNode.get("items").get(0).get("volumeInfo").get("imageLinks").get("thumbnail");
+		
+		Integer pDateInt = (pDate == null) ? 0 : pDate.asInt();
+		String descrString = (descr == null) ? "Not available" : descr.textValue();
+		String imgLinkStr = (imgLink == null) ? "Not available" : imgLink.textValue();
+		
+		bDTO.setYear(pDateInt);
+		bDTO.setDescription(descrString);
+		bDTO.setImage(imgLinkStr);
+	
 	}
 
 	@Override
@@ -129,8 +154,13 @@ public class BookServiceImpl implements BookService {
 		List<BookDTO> b = transform(bookDao.findParams(author, name, isbn));
 		if(b.isEmpty())
 			throw new BookNotFoundException();
-		else
+		else{
+			Iterator<BookDTO> iterator = b.iterator();
+			while(iterator.hasNext()){
+				getGoogleApiInfo(iterator.next());
+			}
 			return b;
+		}
 	}
 
 	@Override
