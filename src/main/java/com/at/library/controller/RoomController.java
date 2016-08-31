@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.RoomDTO;
 import com.at.library.dto.RoomPostDTO;
+import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RoomNotFoundException;
+import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.service.room.RoomService;
 
 @RestController
@@ -31,25 +33,25 @@ public class RoomController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public RoomDTO create(@RequestBody RoomPostDTO room) throws RoomNotFoundException{
+	public RoomDTO create(@RequestBody RoomPostDTO room) throws RoomNotFoundException, ZoneNotFoundException{
 		log.debug(String.format("Vamos a crear la habitacion %s", room));
 		return roomService.create(room);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
-	public RoomDTO get(@PathVariable("id") Integer id){
+	public RoomDTO get(@PathVariable("id") Integer id) throws RoomNotFoundException{
 		log.debug(String.format("Recuperando habitacion con id: %s",id));
 		return roomService.getById(id);
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
-	public void update(@PathVariable("id") Integer id, @RequestBody RoomDTO room){
+	public void update(@PathVariable("id") Integer id, @RequestBody RoomDTO room) throws InvalidDataException{
 		log.debug(String.format("Vamos a modificar la habitacion %s", room));
 		roomService.update(room);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
-	public void delete(@PathVariable("id") Integer id){
+	public void delete(@PathVariable("id") Integer id) throws RoomNotFoundException{
 		log.debug(String.format("Vamos a modificar la habitacion con id %s", id));
 		roomService.delete(id);
 	}

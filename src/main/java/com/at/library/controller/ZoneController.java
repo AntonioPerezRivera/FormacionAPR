@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.at.library.dto.ZoneDTO;
 import com.at.library.dto.ZonePostDTO;
 import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.service.zone.ZoneService;
 
@@ -32,25 +33,25 @@ public class ZoneController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public ZoneDTO create(@RequestBody ZonePostDTO zone) throws BookNotFoundException, ZoneNotFoundException {
+	public ZoneDTO create(@RequestBody ZonePostDTO zone) throws BookNotFoundException, ZoneNotFoundException, InvalidDataException {
 		log.debug(String.format("Vamos a crear la zona %s", zone));
 		return zoneService.create(zone);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
-	public ZoneDTO get(@PathVariable("id") Integer id){
+	public ZoneDTO get(@PathVariable("id") Integer id) throws ZoneNotFoundException{
 		log.debug(String.format("Recuperando zona con id: %s",id));
 		return zoneService.getById(id);
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
-	public void update(@PathVariable("id") Integer id, @RequestBody ZoneDTO zone){
+	public void update(@PathVariable("id") Integer id, @RequestBody ZoneDTO zone) throws InvalidDataException{
 		log.debug(String.format("Vamos a modificar la zona %s", zone));
 		zoneService.update(zone);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.DELETE})
-	public void delete(@PathVariable("id") Integer id){
+	public void delete(@PathVariable("id") Integer id) throws ZoneNotFoundException{
 		log.debug(String.format("Vamos a modificar la zona con id %s", id));
 		zoneService.delete(id);
 	}

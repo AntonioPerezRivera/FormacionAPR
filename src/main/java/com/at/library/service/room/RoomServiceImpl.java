@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.at.library.dao.RoomDao;
 import com.at.library.dto.RoomDTO;
 import com.at.library.dto.RoomPostDTO;
+import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RoomNotFoundException;
 import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.model.Room;
@@ -75,20 +76,30 @@ public class RoomServiceImpl implements RoomService {
 
 
 	@Override
-	public RoomDTO getById(Integer id) {
+	public RoomDTO getById(Integer id) throws RoomNotFoundException {
 		Room r = roomDao.findOne(id);
-		return transform(r);
+		if(r == null)
+			throw new RoomNotFoundException();
+		else
+			return transform(r);
 	}
 
 	@Override
-	public void update(RoomDTO room) {
-		Room r = transform(room);
-		transform(roomDao.save(r));
+	public void update(RoomDTO room) throws InvalidDataException {
+		if(room == null)
+			throw new InvalidDataException();
+		else{
+			Room r = transform(room);
+			transform(roomDao.save(r));
+		}
 	}
 
 	@Override
-	public void delete(Integer id) {
-		roomDao.delete(id);
+	public void delete(Integer id) throws RoomNotFoundException {
+		if(roomDao.findOne(id) == null)
+			throw new RoomNotFoundException();
+		else
+			roomDao.delete(id);
 	}
 
 	@Override

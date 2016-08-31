@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.at.library.dto.RoomDTO;
 import com.at.library.dto.RoomPostDTO;
+import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RoomNotFoundException;
 import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.model.Room;
@@ -37,20 +38,23 @@ public interface RoomService {
 	 * Permite devolver una habitacion concreta dado un id
 	 * @param id
 	 * @return
+	 * @throws RoomNotFoundException 
 	 */
-	RoomDTO getById(Integer id);
+	RoomDTO getById(Integer id) throws RoomNotFoundException;
 
 	/**
 	 * Permite actualizar una habitacion concreta
 	 * @param room
+	 * @throws InvalidDataException 
 	 */
-	void update(RoomDTO room);
+	void update(RoomDTO room) throws InvalidDataException;
 
 	/**
 	 * Permite eliminar una habitacion concreta
 	 * @param id
+	 * @throws RoomNotFoundException 
 	 */
-	void delete(Integer id);
+	void delete(Integer id) throws RoomNotFoundException;
 
 	/**
 	 * Permite devolver una habitacion concreta dependiendo del nombre
