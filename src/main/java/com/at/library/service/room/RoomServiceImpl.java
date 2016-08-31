@@ -12,6 +12,7 @@ import com.at.library.dao.RoomDao;
 import com.at.library.dto.RoomDTO;
 import com.at.library.dto.RoomPostDTO;
 import com.at.library.exception.RoomNotFoundException;
+import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.model.Room;
 import com.at.library.model.Zone;
 import com.at.library.service.zone.ZoneService;
@@ -52,7 +53,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public RoomDTO create(RoomPostDTO room) throws RoomNotFoundException {
+	public RoomDTO create(RoomPostDTO room) throws RoomNotFoundException, ZoneNotFoundException {
 		if(room == null){
 			throw new RoomNotFoundException();
 		}

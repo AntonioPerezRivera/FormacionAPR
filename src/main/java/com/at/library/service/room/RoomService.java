@@ -5,6 +5,7 @@ import java.util.List;
 import com.at.library.dto.RoomDTO;
 import com.at.library.dto.RoomPostDTO;
 import com.at.library.exception.RoomNotFoundException;
+import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.model.Room;
 
 public interface RoomService {
@@ -58,6 +59,6 @@ public interface RoomService {
 	 */
 	Room getByName(String nameRoom);
 
-	RoomDTO create(RoomPostDTO room) throws RoomNotFoundException;
+	RoomDTO create(RoomPostDTO room) throws RoomNotFoundException, ZoneNotFoundException;
 
 }
