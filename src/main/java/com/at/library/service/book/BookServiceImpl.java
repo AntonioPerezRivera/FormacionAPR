@@ -146,7 +146,7 @@ public class BookServiceImpl implements BookService {
 	
 	@Override
 	public boolean checkStatus(Book b){
-		if(b.getStatus() == StatusEnum.ACTIVE)
+		if(b.getStatus() == StatusEnum.OK)
 			return true;
 		else
 			return false;

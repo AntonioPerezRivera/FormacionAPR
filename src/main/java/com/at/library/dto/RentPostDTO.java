@@ -5,31 +5,31 @@ import java.io.Serializable;
 public class RentPostDTO implements Serializable {
 
 	private static final long serialVersionUID = 7376238822804911669L;
-	private Integer idLibro;
-	private Integer idUser;
-	private Integer idEmployee;
+	private Integer book;
+	private Integer user;
+	private Integer employee;
 	
 	public Integer getIdLibro() {
-		return idLibro;
+		return book;
 	}
 	public void setIdLibro(Integer idLibro) {
-		this.idLibro = idLibro;
+		this.book = idLibro;
 	}
 	public Integer getIdUser() {
-		return idUser;
+		return user;
 	}
 	public void setIdUser(Integer idUser) {
-		this.idUser = idUser;
+		this.user = idUser;
 	}
 	public Integer getIdEmployee() {
-		return idEmployee;
+		return employee;
 	}
 	public void setIdEmployee(Integer idEmployee) {
-		this.idEmployee = idEmployee;
+		this.employee = idEmployee;
 	}
 	@Override
 	public String toString() {
-		return "RentPostDTO [idLibro=" + idLibro + ", idUser=" + idUser + ", idEmployee=" + idEmployee + "]";
+		return "RentPostDTO [book=" + book + ", user=" + user + ", employee=" + employee + "]";
 	}
 	
 	

@@ -1,6 +1,7 @@
 package com.at.library.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import com.at.library.enums.RentStatusEnum;
 
@@ -18,6 +19,16 @@ public class RentDTO implements Serializable {
 
 	private RentStatusEnum status;
 	
+	private Date initDate;
+	
+	public Date getInitDate() {
+		return initDate;
+	}
+
+	public void setInitDate(Date initDate) {
+		this.initDate = initDate;
+	}
+
 	public String getComments() {
 		return comments;
 	}

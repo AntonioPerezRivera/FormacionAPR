@@ -58,6 +58,7 @@ public class RentController {
 		rentService.delete(id);
 	}
 	
+	// Sera una peticion delete a (rent/idbook) para devolver el libro
 	@RequestMapping(value="/restore/{book_id}", method={RequestMethod.PUT})
 	public void restore(@PathVariable("book_id") Integer book_id) throws BookNotFoundException{
 		log.debug(String.format("Vamos a proceder a realizar una devolucion en el alquiler con libro_id %s", book_id));

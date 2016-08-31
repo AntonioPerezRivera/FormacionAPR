@@ -2,10 +2,14 @@ package com.at.library.dto;
 
 import java.io.Serializable;
 
+import com.at.library.enums.StatusEnum;
+
 public class BookDTO implements Serializable {
 
 	private static final long serialVersionUID = 1583585532736761521L;
 
+	// Va a buscar por titulo y por isbn
+	
 	private Integer id;
 
 	private String isbn;
@@ -13,6 +17,15 @@ public class BookDTO implements Serializable {
 	private String title;
 
 	private String author;
+	
+	private StatusEnum status;
+	
+	private Integer year;
+	
+	private String image;
+	
+	private String description;
+	
 	
 	public BookDTO(){
 		super();

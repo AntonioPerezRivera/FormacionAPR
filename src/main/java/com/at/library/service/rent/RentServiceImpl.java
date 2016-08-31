@@ -106,7 +106,7 @@ public class RentServiceImpl implements RentService {
 					rent.setEndDate(d);
 					rent.setStatus(RentStatusEnum.ACTIVE);
 					rentDao.save(rent);
-					bookService.modifyStatus(b, StatusEnum.DISABLE);
+					bookService.modifyStatus(b, StatusEnum.RENTED);
 					return transform(rent);
 				}
 				else{
@@ -166,7 +166,7 @@ public class RentServiceImpl implements RentService {
 		Rent r = rentDao.checkReturnNull(b.getId());
 		r.setStatus(RentStatusEnum.TERMINATED);
 		r.setEndDate(new Date());
-		bookService.modifyStatus(b, StatusEnum.ACTIVE);
+		bookService.modifyStatus(b, StatusEnum.OK);
 		rentDao.save(r);
 	}
 
