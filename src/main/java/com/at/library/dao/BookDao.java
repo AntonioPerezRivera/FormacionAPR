@@ -13,7 +13,8 @@ import com.at.library.model.Book;
 @Repository
 public interface BookDao extends CrudRepository<Book, Integer> {
 
-	@Query(value="SELECT new com.at.library.dto.BookDTO(b.id,b.isbn,b.title,b.author) from Book as b where b.id in (select r.rentPK.book.id from Rent as r where r.endDate is null)")
+	@Query(value="SELECT new com.at.library.dto.BookDTO(b.id,b.isbn,b.title,b.author) from Book as b"
+			+ " where b.id in (select r.rentPK.book.id from Rent as r where r.endDate is null)")
 	public List<BookDTO> findUnavailable();
 	
 	@Query(value = "SELECT b from Book as b where (b.author like %:author% OR :author is null) "
