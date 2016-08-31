@@ -16,6 +16,7 @@ import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.BookRentedException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
+import com.at.library.exception.UserBannedException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.service.rent.RentService;
 
@@ -35,7 +36,7 @@ public class RentController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public RentDTO create(@RequestBody RentPostDTO rent) throws UserNotFoundException, BookNotFoundException, InvalidDataException, BookRentedException {
+	public RentDTO create(@RequestBody RentPostDTO rent) throws UserNotFoundException, BookNotFoundException, InvalidDataException, BookRentedException, UserBannedException {
 		log.debug(String.format("Vamos a crear el alquiler %s", rent));
 		return rentService.create(rent);
 	}

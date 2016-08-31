@@ -16,10 +16,12 @@ import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.RentPunishEnum;
 import com.at.library.enums.RentStatusEnum;
 import com.at.library.enums.StatusEnum;
+import com.at.library.enums.UserEnum;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.BookRentedException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
+import com.at.library.exception.UserBannedException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Employee;
@@ -71,7 +73,7 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public RentDTO create(RentPostDTO rentDto) throws UserNotFoundException, 
-					BookRentedException, InvalidDataException, BookNotFoundException {
+					BookRentedException, InvalidDataException, BookNotFoundException, UserBannedException {
 		
 		if(rentDto == null){
 			throw new InvalidDataException();
@@ -87,27 +89,32 @@ public class RentServiceImpl implements RentService {
 				if(bookService.checkStatus(b) == true){
 					
 					User u = userService.getById(rentDto.getIdUser());
-					Employee e = employeeService.getById(rentDto.getIdEmployee());
+					
+					if(u.getUserStatus() != UserEnum.ALLOWED)
+						throw new UserBannedException();
+					else {
+						Employee e = employeeService.getById(rentDto.getIdEmployee());
+							
+						Rent rent = new Rent();
 						
-					Rent rent = new Rent();
-					
-					rent.setBook(b);
-					rent.setUser(u);
-					rent.setEmployee(e);
-					
-					Date d = new Date();
-					rent.setInitDate(d);
-					
-					// Se le suman tres dias a la fecha actual
-					
-					DateTime dateTime = new DateTime(d);
-					rent.setEndDate(dateTime.plusDays(3).toDate());
-					
-					rent.setEndDate(d);
-					rent.setStatus(RentStatusEnum.ACTIVE);
-					rentDao.save(rent);
-					bookService.modifyStatus(b, StatusEnum.RENTED);
-					return transform(rent);
+						rent.setBook(b);
+						rent.setUser(u);
+						rent.setEmployee(e);
+						
+						Date d = new Date();
+						rent.setInitDate(d);
+						
+						// Se le suman tres dias a la fecha actual
+						
+						DateTime dateTime = new DateTime(d);
+						rent.setEndDate(dateTime.plusDays(3).toDate());
+						
+						rent.setEndDate(d);
+						rent.setStatus(RentStatusEnum.ACTIVE);
+						rentDao.save(rent);
+						bookService.modifyStatus(b, StatusEnum.RENTED);
+						return transform(rent);
+					}
 				}
 				else{
 					throw new BookRentedException();
@@ -162,12 +169,18 @@ public class RentServiceImpl implements RentService {
 
 	@Override
 	public void restore(Integer book_id) throws BookNotFoundException {
+		
 		Book b = bookService.getById(book_id);
-		Rent r = rentDao.checkReturnNull(b.getId());
-		r.setStatus(RentStatusEnum.TERMINATED);
-		r.setEndDate(new Date());
-		bookService.modifyStatus(b, StatusEnum.OK);
-		rentDao.save(r);
+		if(b == null){
+			throw new BookNotFoundException();
+		}
+		else {
+			Rent r = rentDao.checkReturnNull(b.getId());
+			r.setStatus(RentStatusEnum.TERMINATED);
+			r.setEndDate(new Date());
+			bookService.modifyStatus(b, StatusEnum.OK);
+			rentDao.save(r);
+		}
 	}
 
 	@Override

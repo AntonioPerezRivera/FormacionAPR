@@ -9,6 +9,7 @@ import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.BookRentedException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
+import com.at.library.exception.UserBannedException;
 import com.at.library.exception.UserNotFoundException;
 import com.at.library.model.Rent;
 
@@ -45,9 +46,10 @@ public interface RentService {
 	 * @throws InvalidDataException 
 	 * @throws BookRentedException 
 	 * @throws BookNotFoundException 
+	 * @throws UserBannedException 
 	 */
 
-	RentDTO create(RentPostDTO rent) throws UserNotFoundException, InvalidDataException, BookRentedException, BookNotFoundException;
+	RentDTO create(RentPostDTO rent) throws UserNotFoundException, InvalidDataException, BookRentedException, BookNotFoundException, UserBannedException;
 	
 	/**
 	 * Devuelve, si existe, un alquiler cuyo id coincida con el parametro introducido
