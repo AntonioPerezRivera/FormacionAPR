@@ -32,9 +32,9 @@ public class ZoneController {
 	}
 	
 	@RequestMapping(method={RequestMethod.POST})
-	public ZoneDTO create(@RequestBody ZonePostDTO rent) throws BookNotFoundException, ZoneNotFoundException {
-		log.debug(String.format("Vamos a crear la zona %s", rent));
-		return zoneService.create(rent);
+	public ZoneDTO create(@RequestBody ZonePostDTO zone) throws BookNotFoundException, ZoneNotFoundException {
+		log.debug(String.format("Vamos a crear la zona %s", zone));
+		return zoneService.create(zone);
 	}
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
