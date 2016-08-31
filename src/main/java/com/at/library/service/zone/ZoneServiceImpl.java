@@ -12,6 +12,7 @@ import com.at.library.dao.ZoneDao;
 import com.at.library.dto.ZoneDTO;
 import com.at.library.dto.ZonePostDTO;
 import com.at.library.exception.BookNotFoundException;
+import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.ZoneNotFoundException;
 import com.at.library.model.Book;
 import com.at.library.model.Zone;
@@ -58,10 +59,10 @@ public class ZoneServiceImpl implements ZoneService {
 	
 
 	@Override
-	public ZoneDTO create(ZonePostDTO zone) throws BookNotFoundException, ZoneNotFoundException {
+	public ZoneDTO create(ZonePostDTO zone) throws BookNotFoundException, InvalidDataException {
 
 		if(zone == null){
-			throw new ZoneNotFoundException();
+			throw new InvalidDataException();
 		}
 		else{
 			Zone z = new Zone();
@@ -81,25 +82,39 @@ public class ZoneServiceImpl implements ZoneService {
 	}
 
 	@Override
-	public ZoneDTO getById(Integer id) {
+	public ZoneDTO getById(Integer id) throws ZoneNotFoundException {
 		Zone z = zoneDao.findOne(id);
-		return transform(z);
+		if(z == null)
+			throw new ZoneNotFoundException();
+		else
+			return transform(z);
 	}
 
 	@Override
-	public void update(ZoneDTO zone) {
-		Zone z = transform(zone);
-		transform(zoneDao.save(z));
+	public void update(ZoneDTO zone) throws InvalidDataException {
+		if(zone == null)
+			throw new InvalidDataException();
+		else{
+			Zone z = transform(zone);
+			transform(zoneDao.save(z));
+		}
 	}
 
 	@Override
-	public void delete(Integer id) {
-		zoneDao.delete(id);
+	public void delete(Integer id) throws ZoneNotFoundException {
+		if(zoneDao.findOne(id) == null)
+			throw new ZoneNotFoundException();
+		else
+			zoneDao.delete(id);
 	}
 
 	@Override
-	public Zone getByName(String name) {
-		return zoneDao.getByName(name);
+	public Zone getByName(String name) throws ZoneNotFoundException {
+		Zone z = zoneDao.getByName(name);
+		if(z == null)
+			throw new ZoneNotFoundException();
+		else
+			return z;
 	}
 
 }
