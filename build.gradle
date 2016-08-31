@@ -35,6 +35,7 @@ dependencies {
 	compile 		('net.sf.dozer:dozer:5.5.1')
 	compile group: 'joda-time', name: 'joda-time', version: '2.9.4'
 	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.4.0'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.4.0'
 	
 	
 	

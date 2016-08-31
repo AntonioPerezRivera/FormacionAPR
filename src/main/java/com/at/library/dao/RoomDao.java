@@ -10,7 +10,7 @@ import com.at.library.model.Room;
 @Repository
 public interface RoomDao extends CrudRepository<Room, Integer> {
 
-	@Query(value="SELECT r from Room where r.name = :nameRoom")
+	@Query(value="SELECT r from Room as r where r.name = :nameRoom")
 	Room getByName(@Param(value="nameRoom")String nameRoom);
 
 }
