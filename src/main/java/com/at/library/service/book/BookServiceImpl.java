@@ -83,6 +83,7 @@ public class BookServiceImpl implements BookService {
 		else{
 			Book b = transform(book);
 			b.setStartDate(new Date());
+			b.setStatus(StatusEnum.OK);
 			return transform(bookDao.save(b));
 		}
 	}
@@ -199,6 +200,7 @@ public class BookServiceImpl implements BookService {
 				hr.setInit(rdto.getInitDate());
 				hr.setEnd(rdto.getEndDate());
 				hr.setTitle(rdto.getBook().getTitle());
+				hr.setId(rdto.getBook().getId());
 				hRented.add(hr);
 			}
 			return hRented;
