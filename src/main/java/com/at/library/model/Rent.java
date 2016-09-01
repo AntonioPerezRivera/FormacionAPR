@@ -29,7 +29,7 @@ public class Rent implements Serializable {
 	private Employee employee;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date endDate;
+	private Date returnDate;
 	
 	@EmbeddedId
 	private RentPK rentPK = new RentPK();
@@ -42,7 +42,7 @@ public class Rent implements Serializable {
 	
 	// Almacena la fecha en la que el usuario lo devuelve
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date returnDate;
+	private Date endDate;
 
 	public RentPK getPk() {
 		return rentPK;

@@ -7,8 +7,7 @@ public class HistoryRentedDTO {
 	private Date init;
 	private Date end;
 	private String title;
-	private Integer id; // id del libro
-	
+	private Integer id; 
 	
 	public Date getInit() {
 		return init;

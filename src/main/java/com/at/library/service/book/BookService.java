@@ -3,7 +3,7 @@ package com.at.library.service.book;
 import java.util.List;
 
 import com.at.library.dto.BookDTO;
-import com.at.library.dto.RentDTO;
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.InvalidDataException;
@@ -111,5 +111,5 @@ public interface BookService {
 	 * @throws BookNotFoundException 
 	 * @throws RentNotFoundException 
 	 */
-	List<RentDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException;
+	List<HistoryRentedDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException;
 }

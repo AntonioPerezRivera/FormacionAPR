@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.at.library.dao.BookDao;
 import com.at.library.dto.BookDTO;
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.dto.RentDTO;
 import com.at.library.enums.StatusEnum;
 import com.at.library.exception.BookNotFoundException;
@@ -36,7 +37,7 @@ public class BookServiceImpl implements BookService {
 	private RentService rentService;
 
 	private static RestTemplate restTemplate = new RestTemplate();
-	private static final String GBOOKS_URL = "https://www.googleapis.com/books/v1/volumes?q=";
+	private static final String GBOOKS_URL = "https://www.googleapis.com/books/v1/volumes?startIndex=0&maxResults=1&q=";
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -113,9 +114,9 @@ public class BookServiceImpl implements BookService {
 	public void getGoogleApiInfo(BookDTO bDTO){
 
 		ObjectNode objectNode = restTemplate.getForObject(GBOOKS_URL+bDTO.getTitle(), ObjectNode.class);
-		JsonNode pDate = objectNode.get("items").get(0).get("volumeInfo").get("publishedDate");
-		JsonNode descr = objectNode.get("items").get(0).get("volumeInfo").get("description");
-		JsonNode imgLink = objectNode.get("items").get(0).get("volumeInfo").get("imageLinks").get("thumbnail");
+		JsonNode pDate = objectNode.get("items").get("volumeInfo").get("publishedDate");
+		JsonNode descr = objectNode.get("items").get("volumeInfo").get("description");
+		JsonNode imgLink = objectNode.get("items").get("volumeInfo").get("imageLinks").get("thumbnail");
 		
 		Integer pDateInt = (pDate == null) ? 0 : pDate.asInt();
 		String descrString = (descr == null) ? "Not available" : descr.textValue();
@@ -183,14 +184,24 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<RentDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException {
+	public List<HistoryRentedDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException {
 		Book b = bookDao.findOne(id);
 		if(b == null){
 			throw new BookNotFoundException();
 		}
 		else{
 			List<RentDTO> r = rentService.getByBookId(id);
-			return r;
+			Iterator<RentDTO> iterator = r.iterator();
+			List<HistoryRentedDTO> hRented = new ArrayList<>();
+			while(iterator.hasNext()){
+				HistoryRentedDTO hr = new HistoryRentedDTO();
+				RentDTO rdto = iterator.next();
+				hr.setInit(rdto.getInitDate());
+				hr.setEnd(rdto.getEndDate());
+				hr.setTitle(rdto.getBook().getTitle());
+				hRented.add(hr);
+			}
+			return hRented;
 		}
 	}
 }

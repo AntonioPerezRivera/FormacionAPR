@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.at.library.dto.BookDTO;
-import com.at.library.dto.RentDTO;
+import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.exception.BookNotFoundException;
 import com.at.library.exception.InvalidDataException;
 import com.at.library.exception.RentNotFoundException;
@@ -67,10 +67,10 @@ public class BookController {
 		bookService.delete(id);
 	}
 	
-	@RequestMapping(value="/{id}/history", method={RequestMethod.GET})
-	public List<RentDTO> history(@PathVariable("id") Integer id) throws BookNotFoundException, RentNotFoundException {
+	@RequestMapping(value="/{id}/rent", method={RequestMethod.GET})
+	public List<HistoryRentedDTO> history(@PathVariable("id") Integer id) throws BookNotFoundException, RentNotFoundException {
 		log.debug(String.format("Recuperando alquileres del libro con id %s", id));
-		List<RentDTO> r = bookService.getRents(id);
+		List<HistoryRentedDTO> r = bookService.getRents(id);
 		return r;
 	}
 

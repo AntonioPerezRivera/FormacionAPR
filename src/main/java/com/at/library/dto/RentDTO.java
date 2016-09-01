@@ -21,12 +21,22 @@ public class RentDTO implements Serializable {
 	
 	private Date initDate;
 	
+	private Date endDate;
+	
 	public Date getInitDate() {
 		return initDate;
 	}
 
 	public void setInitDate(Date initDate) {
 		this.initDate = initDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 	public String getComments() {
