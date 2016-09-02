@@ -2,6 +2,7 @@ package com.at.library.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -20,7 +21,8 @@ public interface UserDao extends CrudRepository<User, Integer> {
 						  @Param(value="name") String name, 
 						  @Param(value="surname1") String surname1,
 						  @Param(value="surname2") String surname2,
-						  @Param(value="address") String address);
+						  @Param(value="address") String address,
+						  Pageable pageable);
 
 	@Query(value="SELECT u from User as u where u.forgiveDate <= CURRENT_DATE")
 	List<User> findPunished();

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,11 +49,13 @@ public class BookController {
 	@RequestMapping(value="/search",method={RequestMethod.GET})
 	public List<BookDTO> get(@RequestParam(value="name",required=false) String name, 
 							 @RequestParam(value="isbn",required=false) String isbn, 
-							 @RequestParam(value="author",required=false) String author)
+							 @RequestParam(value="author",required=false) String author,
+							 @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+							 @RequestParam(value = "size", required = false, defaultValue = "10") Integer size)
 							 throws BookNotFoundException {
 		
 		log.debug(String.format("Recuperando libro con nombre: %s, isbn: %s y autor: %s",name,isbn,author));
-		return bookService.getByParams(name,isbn,author);
+		return bookService.getByParams(name,isbn,author, new PageRequest(page,size));
 	}
 
 	@RequestMapping(value="/{id}", method={RequestMethod.PUT})
@@ -68,9 +71,13 @@ public class BookController {
 	}
 	
 	@RequestMapping(value="/{id}/rent", method={RequestMethod.GET})
-	public List<HistoryRentedDTO> history(@PathVariable("id") Integer id) throws BookNotFoundException, RentNotFoundException {
+	public List<HistoryRentedDTO> history(@PathVariable("id") Integer id,
+				@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+				@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) 
+				throws BookNotFoundException, RentNotFoundException {
+		
 		log.debug(String.format("Recuperando alquileres del libro con id %s", id));
-		List<HistoryRentedDTO> r = bookService.getRents(id);
+		List<HistoryRentedDTO> r = bookService.getRents(id, new PageRequest(page,size));
 		return r;
 	}
 

@@ -2,6 +2,7 @@ package com.at.library.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
@@ -22,6 +23,7 @@ public interface BookDao extends CrudRepository<Book, Integer> {
 			+ "AND (b.isbn like %:isbn% OR :isbn is null)")
 	List<Book> findParams(@Param(value="author") String author,
 					   	  @Param(value="title") String title,
-					   	  @Param(value="isbn") String isbn);
+					   	  @Param(value="isbn") String isbn,
+					   	  Pageable pageable);
 
 }

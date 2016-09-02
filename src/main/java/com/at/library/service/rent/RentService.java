@@ -2,6 +2,8 @@ package com.at.library.service.rent;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.RentPostDTO;
 import com.at.library.enums.RentPunishEnum;
@@ -95,7 +97,7 @@ public interface RentService {
 	 * @return List<RentDTO>
 	 * @throws RentNotFoundException 
 	 */
-	List<RentDTO> getByUserId(Integer id) throws RentNotFoundException;
+	List<RentDTO> getByUserId(Integer id, Pageable pageable) throws RentNotFoundException;
 
 	/**
 	 * Permite devolver todos los alquileres cuyo libro_id coincida con el introducido 
@@ -103,7 +105,7 @@ public interface RentService {
 	 * @return List<RentDTO>
 	 * @throws RentNotFoundException 
 	 */
-	List<RentDTO> getByBookId(Integer id) throws RentNotFoundException;
+	List<RentDTO> getByBookId(Integer id, Pageable pageable) throws RentNotFoundException;
 
 	/**
 	 * Devuelve todos los alquileres retrasados

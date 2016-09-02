@@ -2,6 +2,8 @@ package com.at.library.service.book;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.BookDTO;
 import com.at.library.dto.HistoryRentedDTO;
 import com.at.library.enums.StatusEnum;
@@ -74,7 +76,7 @@ public interface BookService {
 	 * @return List<BookDTO>
 	 * @throws BookNotFoundException 
 	 */
-	List<BookDTO> getByParams(String name, String isbn, String author) throws BookNotFoundException;
+	List<BookDTO> getByParams(String name, String isbn, String author, Pageable pageable) throws BookNotFoundException;
 	
 	/**
 	 * Permite la modificacion de un libro concreto
@@ -111,5 +113,5 @@ public interface BookService {
 	 * @throws BookNotFoundException 
 	 * @throws RentNotFoundException 
 	 */
-	List<HistoryRentedDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException;
+	List<HistoryRentedDTO> getRents(Integer id, Pageable pageable) throws BookNotFoundException, RentNotFoundException;
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -62,17 +63,23 @@ public class UserController {
 							 @RequestParam(value="name",required=false) String name, 
 							 @RequestParam(value="surname1",required=false) String surname1,
 							 @RequestParam(value="surname2",required=false) String surname2,
-							 @RequestParam(value="address",required=false) String address)
+							 @RequestParam(value="address",required=false) String address,
+							 @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+						 	 @RequestParam(value = "size", required = false, defaultValue = "10") Integer size)
 							 throws UserNotFoundException {
 		
 		log.debug(String.format("Recuperando usuario con dni: %s, nombre: %s, apellido 1: %s, apellido 2: %s, direccion: %s",dni,name,surname1,surname2,address));
-		return userService.getByParams(dni,name,surname1,surname2,address);
+		return userService.getByParams(dni,name,surname1,surname2,address, new PageRequest(page,size));
 	}
 	
 	@RequestMapping(value="/{id}/history", method={RequestMethod.GET})
-	public List<RentDTO> history(@PathVariable("id") Integer id) throws UserNotFoundException, RentNotFoundException {
+	public List<RentDTO> history(@PathVariable("id") Integer id,
+					@RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+			 		@RequestParam(value = "size", required = false, defaultValue = "10") Integer size) 
+					throws UserNotFoundException, RentNotFoundException {
+		
 		log.debug(String.format("Recuperando alquileres del usuario con id %s", id));
-		List<RentDTO> r = userService.getRents(id);
+		List<RentDTO> r = userService.getRents(id, new PageRequest(page,size));
 		return r;
 	}
 

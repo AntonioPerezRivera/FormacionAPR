@@ -10,6 +10,7 @@ import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -178,20 +179,20 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<RentDTO> getRents(Integer id) throws UserNotFoundException, RentNotFoundException {
+	public List<RentDTO> getRents(Integer id, Pageable pageable) throws UserNotFoundException, RentNotFoundException {
 		User u = userDao.findOne(id);
 		if(u == null){
 			throw new UserNotFoundException();
 		}
 		else{
-			List<RentDTO> r = rentService.getByUserId(id);
+			List<RentDTO> r = rentService.getByUserId(id,pageable);
 			return r;
 		}
 	}
 
 	@Override
-	public List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address) throws UserNotFoundException {
-		List<UserDTO> b = transform(userDao.findParams(dni,name,surname1,surname2,address));
+	public List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address, Pageable pageable) throws UserNotFoundException {
+		List<UserDTO> b = transform(userDao.findParams(dni,name,surname1,surname2,address, pageable));
 		if(b.isEmpty()){
 			throw new UserNotFoundException();
 		}

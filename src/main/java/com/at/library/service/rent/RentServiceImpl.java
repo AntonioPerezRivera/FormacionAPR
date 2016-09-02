@@ -8,6 +8,7 @@ import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.at.library.dao.RentDao;
@@ -182,8 +183,8 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<RentDTO> getByUserId(Integer id) throws RentNotFoundException {
-		List<Rent> r = rentDao.findBookId(id);
+	public List<RentDTO> getByUserId(Integer id, Pageable pageable) throws RentNotFoundException {
+		List<Rent> r = rentDao.findBookId(id, pageable);
 		if(r.isEmpty()){
 			throw new RentNotFoundException();
 		}
@@ -200,8 +201,8 @@ public class RentServiceImpl implements RentService {
 	}
 
 	@Override
-	public List<RentDTO> getByBookId(Integer id) throws RentNotFoundException {
-		List<Rent> r = rentDao.findBookId(id);
+	public List<RentDTO> getByBookId(Integer id, Pageable pageable) throws RentNotFoundException {
+		List<Rent> r = rentDao.findBookId(id,pageable);
 		if(r.isEmpty()){
 			throw new RentNotFoundException();
 		}

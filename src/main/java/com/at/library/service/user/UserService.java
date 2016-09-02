@@ -2,6 +2,8 @@ package com.at.library.service.user;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+
 import com.at.library.dto.RentDTO;
 import com.at.library.dto.UserDTO;
 import com.at.library.enums.UserEnum;
@@ -90,7 +92,7 @@ public interface UserService {
 	 * @throws UserNotFoundException 
 	 * @throws RentNotFoundException 
 	 */
-	List<RentDTO> getRents(Integer id) throws UserNotFoundException, RentNotFoundException;
+	List<RentDTO> getRents(Integer id, Pageable pageable) throws UserNotFoundException, RentNotFoundException;
 
 	/**
 	 * Permite la busqueda de un usuario concreto
@@ -102,7 +104,7 @@ public interface UserService {
 	 * @return List<UserDTO>
 	 * @throws UserNotFoundException 
 	 */
-	List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address) throws UserNotFoundException;
+	List<UserDTO> getByParams(String dni, String name, String surname1, String surname2, String address, Pageable pageable) throws UserNotFoundException;
 
 	/**
 	 * Permite penalizar a los usuarios que se hayan retrasado en la devolucion de los libros

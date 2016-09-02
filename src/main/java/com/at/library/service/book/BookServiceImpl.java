@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
@@ -115,11 +116,16 @@ public class BookServiceImpl implements BookService {
 	public void getGoogleApiInfo(BookDTO bDTO){
 
 		ObjectNode objectNode = restTemplate.getForObject(GBOOKS_URL+bDTO.getTitle(), ObjectNode.class);
-		JsonNode pDate = objectNode.get("items").get("volumeInfo").get("publishedDate");
-		JsonNode descr = objectNode.get("items").get("volumeInfo").get("description");
-		JsonNode imgLink = objectNode.get("items").get("volumeInfo").get("imageLinks").get("thumbnail");
+		JsonNode imgLink = objectNode.get("items").get(0).get("volumeInfo").get("imageLinks").get("thumbnail");
+		JsonNode pDate = objectNode.get("items").get(0).get("volumeInfo").get("publishedDate");
+		JsonNode descr = objectNode.get("items").get(0).get("volumeInfo").get("description");
 		
-		String pDateStr = pDate.asText();
+		String pDateStr;
+		if(pDate != null)
+			 pDateStr = pDate.asText();
+		else
+			 pDateStr = "";
+		
 		if(pDateStr.length() > 4)
 			pDateStr = pDateStr.substring(0, 3);
 		
@@ -154,8 +160,8 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<BookDTO> getByParams(String name, String isbn, String author) throws BookNotFoundException {
-		List<BookDTO> b = transform(bookDao.findParams(author, name, isbn));
+	public List<BookDTO> getByParams(String name, String isbn, String author, Pageable pageable) throws BookNotFoundException {
+		List<BookDTO> b = transform(bookDao.findParams(author, name, isbn, pageable));
 		if(b.isEmpty())
 			throw new BookNotFoundException();
 		else{
@@ -187,13 +193,13 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public List<HistoryRentedDTO> getRents(Integer id) throws BookNotFoundException, RentNotFoundException {
+	public List<HistoryRentedDTO> getRents(Integer id, Pageable pageable) throws BookNotFoundException, RentNotFoundException {
 		Book b = bookDao.findOne(id);
 		if(b == null){
 			throw new BookNotFoundException();
 		}
 		else{
-			List<RentDTO> r = rentService.getByBookId(id);
+			List<RentDTO> r = rentService.getByBookId(id, pageable);
 			Iterator<RentDTO> iterator = r.iterator();
 			List<HistoryRentedDTO> hRented = new ArrayList<>();
 			while(iterator.hasNext()){
