@@ -28,12 +28,6 @@ public class UserController {
 
 	private static final Logger log = org.slf4j.LoggerFactory.getLogger(UserController.class);
 	
-	@RequestMapping(method={RequestMethod.GET})
-	public List<UserDTO> getAll() {
-		log.debug("Buscando todos los usuarios en el sistema");
-		return userService.findAll();
-	}
-	
 	@RequestMapping(method={RequestMethod.POST})
 	public UserDTO create(@RequestBody UserDTO user) throws InvalidDataException {
 		log.debug(String.format("Vamos a crear el usuario %s", user));
@@ -58,7 +52,7 @@ public class UserController {
 		userService.delete(id);
 	}
 	
-	@RequestMapping(value="/search",method={RequestMethod.GET})
+	@RequestMapping(method={RequestMethod.GET})
 	public List<UserDTO> get(@RequestParam(value="dni",required=false) String dni, 
 							 @RequestParam(value="name",required=false) String name, 
 							 @RequestParam(value="surname1",required=false) String surname1,

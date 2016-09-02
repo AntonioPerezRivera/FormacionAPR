@@ -28,12 +28,6 @@ public class BookController {
 
 	private static final Logger log = org.slf4j.LoggerFactory.getLogger(BookController.class);
 	
-	@RequestMapping(method={RequestMethod.GET})
-	public List<BookDTO> getAll() {
-		log.debug("Buscando todos los libros en el sistema");
-		return bookService.findAll();
-	}
-	
 	@RequestMapping(method={RequestMethod.POST})
 	public BookDTO create(@RequestBody BookDTO book) throws InvalidDataException {
 		log.debug(String.format("Vamos a crear el libro %s", book));
@@ -46,7 +40,7 @@ public class BookController {
 		return bookService.getByIdDTO(id);
 	}
 	
-	@RequestMapping(value="/search",method={RequestMethod.GET})
+	@RequestMapping(method={RequestMethod.GET})
 	public List<BookDTO> get(@RequestParam(value="name",required=false) String name, 
 							 @RequestParam(value="isbn",required=false) String isbn, 
 							 @RequestParam(value="author",required=false) String author,
