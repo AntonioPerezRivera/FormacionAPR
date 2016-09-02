@@ -119,8 +119,12 @@ public class BookServiceImpl implements BookService {
 		JsonNode descr = objectNode.get("items").get("volumeInfo").get("description");
 		JsonNode imgLink = objectNode.get("items").get("volumeInfo").get("imageLinks").get("thumbnail");
 		
+		String pDateStr = pDate.asText();
+		if(pDateStr.length() > 4)
+			pDateStr = pDateStr.substring(0, 3);
+		
 		if (pDate != null)
-			bDTO.setYear(pDate.asInt());
+			bDTO.setYear(Integer.parseInt(pDateStr));
 		if (descr != null)
 			bDTO.setDescription(descr.asText());
 		if (imgLink != null)
