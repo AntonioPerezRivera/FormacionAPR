@@ -20,7 +20,8 @@ public interface BookDao extends CrudRepository<Book, Integer> {
 	
 	@Query(value = "SELECT b from Book as b where (b.author like %:author% OR :author is null) "
 			+ "AND (b.title like %:title% OR :title is null) "
-			+ "AND (b.isbn like %:isbn% OR :isbn is null)")
+			+ "AND (b.isbn like %:isbn% OR :isbn is null)"
+			+ "AND b.status != com.at.library.enums.StatusEnum.DELETED")
 	List<Book> findParams(@Param(value="author") String author,
 					   	  @Param(value="title") String title,
 					   	  @Param(value="isbn") String isbn,

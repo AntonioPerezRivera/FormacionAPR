@@ -155,7 +155,8 @@ public class BookServiceImpl implements BookService {
 			throw new BookNotFoundException();
 		}
 		else{
-			bookDao.delete(id);
+			b.setStatus(StatusEnum.DELETED);
+			bookDao.save(b);
 		}
 	}
 
