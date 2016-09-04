@@ -106,5 +106,5 @@ public class RoomServiceImpl implements RoomService {
 	public Room getByName(String nameRoom) {
 		return roomDao.getByName(nameRoom);
 	}
-
+	
 }

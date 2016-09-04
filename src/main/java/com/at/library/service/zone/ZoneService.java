@@ -34,14 +34,44 @@ public interface ZoneService {
 	 */
 	Zone transform(ZoneDTO zone);
 
+	/**
+	 * Devuelve una zona, si existe, con el id especificado
+	 * @param id
+	 * @return ZoneDTO
+	 * @throws ZoneNotFoundException
+	 */
 	ZoneDTO getById(Integer id) throws ZoneNotFoundException;
 
+	
+	/**
+	 * Permite actualizar una zona concreta
+	 * @param zone
+	 * @throws InvalidDataException
+	 */
 	void update(ZoneDTO zone) throws InvalidDataException;
 
+	/**
+	 * Permite eliminar por completo una zona
+	 * @param id
+	 * @throws ZoneNotFoundException
+	 */
 	void delete(Integer id) throws ZoneNotFoundException;
 
+	/**
+	 * Permite crear una nueva zona
+	 * @param zone
+	 * @return
+	 * @throws BookNotFoundException
+	 * @throws InvalidDataException
+	 */
 	ZoneDTO create(ZonePostDTO zone) throws BookNotFoundException, InvalidDataException;
 
+	/**
+	 * Devuelve, si existe, una zona con el nombre especificado
+	 * @param name
+	 * @return Zone
+	 * @throws ZoneNotFoundException
+	 */
 	Zone getByName(String name) throws ZoneNotFoundException;
 
 }

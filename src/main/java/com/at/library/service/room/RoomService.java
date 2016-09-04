@@ -63,6 +63,13 @@ public interface RoomService {
 	 */
 	Room getByName(String nameRoom);
 
+	/**
+	 * Permite la creacion de una habitacion concreta
+	 * @param room
+	 * @return RoomDTO
+	 * @throws RoomNotFoundException
+	 * @throws ZoneNotFoundException
+	 */
 	RoomDTO create(RoomPostDTO room) throws RoomNotFoundException, ZoneNotFoundException;
 
 }

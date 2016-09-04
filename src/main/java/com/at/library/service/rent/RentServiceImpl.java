@@ -106,7 +106,6 @@ public class RentServiceImpl implements RentService {
 						rent.setInitDate(d);
 						
 						// Se le suman tres dias a la fecha actual
-						
 						DateTime dateTime = new DateTime(d);
 						rent.setReturnDate(dateTime.plusDays(3).toDate());
 						rent.setStatus(RentStatusEnum.ACTIVE);
