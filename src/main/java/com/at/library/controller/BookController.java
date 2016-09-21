@@ -36,7 +36,7 @@ public class BookController {
 	
 	@RequestMapping(value="/{id}", method={RequestMethod.GET})
 	public BookDTO get(@PathVariable("id") Integer id) throws BookNotFoundException {
-		log.debug(String.format("Recuperando libro con id: %s",id));
+		log.debug(String.format("Recuperando libros con id: %s",id));
 		return bookService.getByIdDTO(id);
 	}
 	
